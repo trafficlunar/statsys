@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>status - {{ .Title }}</title>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+			rel="stylesheet"
+		/>
+
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
+		<style>
+			* {
+				box-sizing: border-box;
+			}
+
+			body {
+				background-color: #fcfcfc;
+				font-family: "Inter", sans-serif;
+				min-height: 100vh;
+				margin: 0;
+				display: flex;
+				justify-content: center;
+			}
+
+			body::before {
+				content: "";
+				position: fixed;
+				inset: 0;
+				background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px), linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+				background-size: 48px 48px;
+				background-position: center;
+				pointer-events: none;
+			}
+
+			main {
+				display: flex;
+				flex-direction: column;
+				width: 100%;
+				max-width: 40rem;
+				padding: 4rem 2rem 1.5rem;
+				background-color: white;
+				z-index: 1;
+				outline: 1px solid rgba(0, 0, 0, 0.04);
+			}
+
+			h1 {
+				font-weight: 800;
+				margin-top: 1rem;
+				margin-bottom: 1rem;
+				font-size: 1.5rem;
+			}
+
+			hr {
+				border: 0;
+				border-bottom: 2px dotted rgba(0, 0, 0, 0.1);
+			}
+
+			p {
+				margin-top: 4px;
+				line-height: 1.5rem;
+			}
+
+			#emoticon {
+				display: flex;
+				align-items: end;
+				height: 4.375rem;
+			}
+
+			#emoticon span {
+				font-size: 3rem;
+				font-weight: 700;
+			}
+
+			#overall-status {
+				background-color: black;
+				color: white;
+				padding: 0.5rem;
+				font-size: 0.875rem;
+				width: fit-content;
+			}
+
+			#pattern {
+				flex-grow: 1;
+				background-image: repeating-linear-gradient(-45deg, #000, #000 10px, transparent 0px, transparent 20px);
+			}
+
+			#caption {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-top: 0.25rem;
+				margin-bottom: 1.25rem;
+			}
+
+			#last-updated {
+				color: rgba(0, 0, 0, 0.6);
+				font-size: 0.875rem;
+				margin: 0;
+			}
+
+			#legend {
+				display: flex;
+				justify-content: flex-end;
+				gap: 1rem;
+				flex-wrap: wrap;
+			}
+
+			.legend-item {
+				display: flex;
+				align-items: center;
+				gap: 0.35rem;
+				font-size: 0.75rem;
+				pointer-events: none;
+			}
+
+			.legend-item .status-bar {
+				width: 1rem;
+				height: 1rem;
+			}
+
+			#services {
+				display: flex;
+				flex-direction: column;
+				gap: 2.5rem;
+			}
+
+			.info {
+				display: flex;
+				align-items: end;
+				justify-content: space-between;
+			}
+
+			.service-name {
+				margin: 0;
+				font-size: 1.25rem;
+				text-decoration: none;
+				color: black;
+				font-weight: 600;
+
+				display: flex;
+				align-items: center;
+				gap: 0.2rem;
+			}
+
+			.service-name svg {
+				height: 1rem;
+				color: rgba(0, 0, 0, 0.2);
+			}
+
+			.service-name:hover svg {
+				color: rgba(0, 0, 0, 0.8);
+			}
+
+			.status {
+				font-family: "JetBrains Mono", monospace;
+				font-weight: 600;
+				font-size: 0.75rem;
+			}
+
+			.bars-container {
+				display: flex;
+				flex-direction: column;
+				align-items: end;
+			}
+
+			.bars {
+				position: relative;
+				display: flex;
+				justify-content: end;
+				width: 100%;
+				/* gap: 0.185rem; */
+			}
+
+			.bars > div {
+				display: flex;
+				justify-content: center;
+				width: calc(100% / 30);
+				height: 2.5rem;
+				position: relative;
+			}
+
+			.status-bar {
+				background-color: black;
+				border: 1px solid black;
+				width: calc(100% - 0.188rem);
+				height: 100%;
+				transition: transform 100ms ease-in-out;
+				position: relative;
+				z-index: 0;
+			}
+
+			.bars > div:hover .status-bar {
+				transform: translateY(-3px);
+				background-color: rgba(0, 0, 0, 0.7);
+			}
+
+			.bars > div:hover .status-bar::after {
+				content: attr(data-tooltip);
+
+				position: absolute;
+				bottom: 100%;
+				left: 50%;
+
+				margin-bottom: 0.5rem;
+				font-family: "JetBrains Mono", monospace;
+				font-weight: 600;
+
+				background-color: black;
+				color: white;
+				padding: 0.45rem 0.5rem;
+				border-radius: 0.25rem;
+				font-size: 0.75rem;
+
+				transform: translateX(-50%);
+				white-space: nowrap;
+				z-index: 10;
+			}
+
+			.status-bar.Unknown {
+				background-color: transparent;
+				background: radial-gradient(circle at center, rgb(235, 235, 235) 3px, transparent 3px);
+				border: 0;
+			}
+
+			.bars > div:hover .status-bar.Unknown {
+				background-color: transparent;
+			}
+
+			.status-bar.Degraded {
+				background-image: linear-gradient(to bottom, transparent 30%, white 30%), linear-gradient(to right, transparent 40%, white 40%);
+				background-size: 6px 7px;
+				background-position: 3px 4px;
+			}
+
+			.status-bar.Offline {
+				background-color: white;
+			}
+
+			.status-bar.Offline::before {
+				content: "✕";
+				position: absolute;
+				inset: 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 2rem;
+				font-weight: 700;
+				color: black;
+				pointer-events: none;
+				overflow: hidden;
+			}
+
+			.bars-footer {
+				display: flex;
+				justify-content: space-between;
+				font-size: 0.75rem;
+				font-family: "JetBrains Mono", monospace;
+				margin-top: 0.5rem;
+				color: rgba(0, 0, 0, 0.5);
+				width: 100%;
+			}
+
+			footer {
+				margin-top: auto;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			footer a {
+				color: rgba(0, 0, 0, 0.3);
+				font-size: 0.875rem;
+				text-decoration: none;
+			}
+
+			footer a:hover {
+				color: black;
+			}
+
+			#combobox {
+				position: relative;
+				width: 8rem;
+			}
+
+			#combobox-trigger {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+
+				width: 100%;
+				height: 1.75rem;
+				font-family: "Inter", sans-serif;
+				font-size: 0.825rem;
+
+				background-color: white;
+				border: 1px solid rgba(0, 0, 0, 0.5);
+				border-radius: 4px;
+				outline: none;
+				padding: 0;
+				padding-left: 0.5rem;
+
+				cursor: pointer;
+				transition: background-color 100ms ease;
+			}
+
+			#combobox-trigger:hover {
+				background-color: rgba(0, 0, 0, 0.03);
+			}
+
+			#combobox-trigger div {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				border-left: 1px solid rgba(0, 0, 0, 0.5);
+			}
+
+			#combobox-trigger.open div svg {
+				transform: rotate(180deg);
+			}
+
+			#combobox-dropdown {
+				position: absolute;
+				bottom: calc(100% + 0.25rem);
+				width: 100%;
+				background-color: white;
+				border: 1px solid black;
+				display: none;
+				flex-direction: column;
+				z-index: 100;
+				border-radius: 4px;
+			}
+
+			#combobox-dropdown.open {
+				display: flex;
+			}
+
+			.combobox-option {
+				padding: 0.35rem 0.5rem;
+				cursor: pointer;
+				color: black;
+				font-size: 0.825rem;
+			}
+
+			.combobox-option.selected {
+				background-color: rgba(0, 0, 0, 0.08);
+			}
+
+			.combobox-option:hover {
+				background-color: black;
+				color: white;
+			}
+
+			@media (max-width: 640px) {
+				main {
+					padding: 3rem 1rem 2rem;
+				}
+
+				#emoticon {
+					font-size: 2.5rem;
+				}
+
+				h1 {
+					font-size: 1.25rem;
+				}
+
+				h2 {
+					font-size: 1.125rem;
+				}
+
+				#overall-status {
+					font-size: 0.8125rem;
+				}
+
+				.status {
+					font-size: 0.6875rem;
+				}
+
+				.bars {
+					gap: 0.15rem;
+				}
+
+				.status-bar {
+					height: 2rem;
+				}
+
+				.legend-item {
+					font-size: 0.6875rem;
+				}
+
+				.legend-item .status-bar {
+					width: 0.875rem;
+					height: 0.875rem;
+				}
+
+				.bars-footer {
+					font-size: 0.6875rem;
+				}
+
+				#legend {
+					gap: 0.75rem;
+				}
+			}
+
+			@media (max-width: 480px) {
+				main {
+					padding: 2rem 0.875rem 1.5rem;
+				}
+
+				#emoticon {
+					font-size: 2rem;
+				}
+
+				h1 {
+					font-size: 1.125rem;
+				}
+
+				h2 {
+					font-size: 1rem;
+				}
+
+				.bars {
+					gap: 0.125rem;
+				}
+
+				.status-bar {
+					height: 1.75rem;
+				}
+
+				.status-bar:hover::after {
+					font-size: 0.6rem;
+					padding: 0.35rem 0.4rem;
+				}
+
+				#services {
+					gap: 2rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<div id="emoticon">
+				<span>{{ if .IsOperational }} ( • ⩊ • ) {{ else }} ( 𖦹 ﹏ 𖦹 ) {{ end }}</span>
+			</div>
+			<h1>status — {{ .Title }}</h1>
+
+			<div style="display: flex">
+				<div id="overall-status">
+					<span style="font-weight: 500; margin-right: 0.15rem">{{ if .IsOperational }} ✔ {{ else }} ✖ {{ end }}</span>
+					<span>{{ if .IsOperational }} All services are operational! {{ else }} We're experiencing some problems! {{ end }}</span>
+				</div>
+
+				<div id="pattern"></div>
+			</div>
+
+			<div id="caption">
+				<p id="last-updated">Last updated: ? ago</p>
+
+				<div id="legend">
+					<div class="legend-item">
+						<div class="status-bar Offline"></div>
+						<span>Offline</span>
+					</div>
+					<div class="legend-item">
+						<div class="status-bar Degraded" style="background-position: 3px 3px"></div>
+						<span>Degraded</span>
+					</div>
+					<div class="legend-item">
+						<div class="status-bar"></div>
+						<span>Online</span>
+					</div>
+				</div>
+			</div>
+
+			<div id="services">
+				{{ range $serviceIndex, $serviceStatus := .Services }}
+				<div>
+					<div class="info">
+						<a href="{{ $serviceStatus.Url }}" class="service-name">
+							{{ $serviceStatus.Name }}
+							<!-- link icon -->
+							<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 256 256">
+								<path
+									fill="currentColor"
+									d="M228 104a12 12 0 0 1-24 0V69l-59.51 59.51a12 12 0 0 1-17-17L187 52h-35a12 12 0 0 1 0-24h64a12 12 0 0 1 12 12Zm-44 24a12 12 0 0 0-12 12v64H52V84h64a12 12 0 0 0 0-24H48a20 20 0 0 0-20 20v128a20 20 0 0 0 20 20h128a20 20 0 0 0 20-20v-68a12 12 0 0 0-12-12"
+								/>
+							</svg>
+						</a>
+						<span class="status">{{ $serviceStatus.Status | ToUpper }}</span>
+					</div>
+
+					<hr />
+
+					<div class="bars-container">
+						{{ if eq $.View "minutes" }}
+						<div class="bars">
+							{{ range $timelineIndex, $timelineStatus := $serviceStatus.MinuteTimeline }}
+							<div>
+								<div
+									class="status-bar {{ $timelineStatus.Status }}"
+									data-tooltip="{{ $timelineStatus.FormattedTime }} • {{ $timelineStatus.Status }}"
+								></div>
+							</div>
+							{{ end }}
+						</div>
+
+						<div class="bars-footer">
+							<span>30 minutes ago</span>
+							<span>now</span>
+						</div>
+						{{ else if eq $.View "hours" }}
+						<div class="bars">
+							{{ range $timelineIndex, $timelineStatus := $serviceStatus.HourTimeline }}
+							<div>
+								<div
+									class="status-bar {{ $timelineStatus.Status }}"
+									data-tooltip="{{ $timelineStatus.FormattedTime }} • {{ $timelineStatus.Status }}"
+								></div>
+							</div>
+							{{ end }}
+						</div>
+
+						<div class="bars-footer">
+							<span>24 hours ago</span>
+							<span>now</span>
+						</div>
+
+						{{ else }}
+						<div class="bars">
+							{{ range $timelineIndex, $timelineStatus := $serviceStatus.DayTimeline }}
+							<div>
+								<div
+									class="status-bar {{ $timelineStatus.Status }}"
+									data-tooltip="{{ $timelineStatus.FormattedTime }} • {{ $timelineStatus.Status }}"
+								></div>
+							</div>
+							{{ end }}
+						</div>
+
+						<div class="bars-footer">
+							<span>30 days ago</span>
+							<span>today</span>
+						</div>
+						{{ end }}
+					</div>
+				</div>
+				{{ else }}
+				<p>No services configured.</p>
+				{{ end }}
+			</div>
+
+			<footer>
+				<div id="combobox">
+					<button id="combobox-trigger">
+						<span>{{ if eq .View "minutes" }} 30 minutes {{ else if eq .View "hours" }} 24 hours {{ else }} 30 days {{ end }}</span>
+						<!-- arrow icon -->
+						<div>
+							<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
+								<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m7 10l5 5m0 0l5-5" />
+							</svg>
+						</div>
+					</button>
+
+					<div id="combobox-dropdown">
+						<a href="/?view=minutes" class='combobox-option {{ if eq .View "minutes" }}selected{{ end }}' data-value="minutes">30 minutes</a>
+						<a href="/?view=hours" class='combobox-option {{ if eq .View "hours" }}selected{{ end }}' data-value="hours">24 hours</a>
+						<a href="/?view=days" class='combobox-option {{ if eq .View "days" }}selected{{ end }}' data-value="days">30 days</a>
+					</div>
+				</div>
+
+				<a href="{{ .LinkUrl }}">{{ .LinkText }}</a>
+			</footer>
+		</main>
+
+		<script>
+			const lastUpdatedText = document.querySelector("#last-updated");
+
+			function update() {
+				const seconds = Math.floor((Date.now() - new Date(Number("{{ .LastUpdated }}"))) / 1000);
+				const minutes = Math.floor(seconds / 60);
+				const hours = Math.floor(seconds / 3600);
+				const days = Math.floor(seconds / 86400);
+
+				if (days >= 1) lastUpdatedText.textContent = `Last updated: ${days}d ago`;
+				if (hours >= 1) lastUpdatedText.textContent = `Last updated: ${hours}h ago`;
+
+				lastUpdatedText.textContent = `Last updated: ${minutes}m ago`;
+			}
+
+			update();
+			setInterval(update, 60000);
+
+			// combobox
+			const trigger = document.querySelector("#combobox-trigger");
+			const dropdown = document.querySelector("#combobox-dropdown");
+
+			trigger.addEventListener("click", (e) => {
+				trigger.classList.toggle("open");
+				dropdown.classList.toggle("open");
+			});
+		</script>
+	</body>
+</html>

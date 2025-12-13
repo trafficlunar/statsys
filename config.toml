@@ -1,0 +1,27 @@
+# Name of status page, shown at the top
+title = "trafficlunar"
+
+# Footer link, shown at the bottom
+link_text = "go back"
+link_url = "https://trafficlunar.net"
+
+# Default timeline shown on the index page
+# Users can still switch views manually
+#
+# Available options:
+# 'minutes' - past 30 minutes
+# 'hours'   - past 24 hours
+# 'days'    - past 30 days
+default_view = "hours"
+
+# List of services to monitor
+[[services]]
+name = "website"
+url = "http://localhost:9999/up"
+# Response time (in milliseconds) after which the service is considered "Degraded"
+# Defaults to 1000ms
+latency_threshold = 1000
+
+[[services]]
+name = "api"
+url = "http://localhost:9999/degraded"
