@@ -5,42 +5,17 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>error - {{ .Title }}</title>
 
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
-			rel="stylesheet"
-		/>
-
-		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="/styles.css" />
 		<style>
 			body {
-				background-color: #fcfcfc;
-				font-family: "Inter", sans-serif;
-				height: 100vh;
-				margin: 0;
-
-				display: flex;
-				justify-content: center;
 				align-items: center;
-			}
-
-			body::before {
-				content: "";
-				position: fixed;
-				inset: 0;
-				background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px), linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px);
-				background-size: 48px 48px;
-				background-position: center;
-				pointer-events: none;
 			}
 
 			main {
 				display: flex;
 				flex-direction: column;
 				width: 24rem;
-
 				padding: 1rem 2rem;
 				background-color: white;
 				z-index: 1;
@@ -60,13 +35,6 @@
 			p {
 				margin-top: 0.5rem;
 				line-height: 1.5rem;
-			}
-
-			a {
-				text-decoration: none;
-				background-color: black;
-				color: white;
-				padding: 0.05rem 0.2rem;
 			}
 		</style>
 	</head>

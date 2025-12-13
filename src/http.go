@@ -104,6 +104,10 @@ func index(w http.ResponseWriter, req *http.Request) {
 	}
 }
 
+func styles(w http.ResponseWriter, req *http.Request) {
+	http.ServeFile(w, req, "www/styles.css")
+}
+
 func favicon(w http.ResponseWriter, req *http.Request) {
 	http.ServeFile(w, req, "www/favicon.ico")
 }
@@ -132,8 +136,10 @@ func StartHttpServer() {
 
 	// http server
 	http.HandleFunc("/", index)
+	http.HandleFunc("/styles.css", styles)
 	http.HandleFunc("/favicon.ico", favicon)
 	http.HandleFunc("/robots.txt", robots)
+	http.Handle("/fonts/", http.StripPrefix("/fonts/", http.FileServer(http.Dir("www/fonts/"))))
 	if err := http.ListenAndServe(":8888", nil); err != nil {
 		log.Fatalf("server failed: %v", err)
 	}
