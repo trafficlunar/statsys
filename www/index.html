@@ -16,6 +16,7 @@
 				display: flex;
 				flex-direction: column;
 				width: 100%;
+				height: max-content;
 				max-width: 40rem;
 				padding: 4rem 2rem 1.5rem;
 				background-color: white;
@@ -102,6 +103,7 @@
 				display: flex;
 				flex-direction: column;
 				gap: 2.5rem;
+				margin-bottom: 4rem;
 			}
 
 			.info {
@@ -560,10 +562,15 @@
 				const hours = Math.floor(seconds / 3600);
 				const days = Math.floor(seconds / 86400);
 
-				if (days >= 1) lastUpdatedText.textContent = `Last updated: ${days}d ago`;
-				if (hours >= 1) lastUpdatedText.textContent = `Last updated: ${hours}h ago`;
-
-				lastUpdatedText.textContent = `Last updated: ${minutes}m ago`;
+				if (days >= 1) {
+					lastUpdatedText.textContent = `Last updated: ${days}d ago`;
+				} else if (hours >= 1) {
+					lastUpdatedText.textContent = `Last updated: ${hours}h ago`;
+				} else if (minutes >= 1) {
+					lastUpdatedText.textContent = `Last updated: ${minutes}m ago`;
+				} else {
+					lastUpdatedText.textContent = `Last updated: now`;
+				}
 			}
 
 			update();

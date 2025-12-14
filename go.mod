@@ -3,6 +3,7 @@ module status-page
 go 1.25.4
 
 require (
+	github.com/klauspost/compress v1.18.2
 	github.com/pelletier/go-toml/v2 v2.2.4
 	modernc.org/sqlite v1.40.1
 )

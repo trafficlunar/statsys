@@ -43,6 +43,15 @@
 	src: url("/fonts/inter-v20-latin-800.woff2") format("woff2"), url("/fonts/inter-v20-latin-800.ttf") format("truetype");
 }
 
+/* jetbrains-mono-regular */
+@font-face {
+	font-display: swap;
+	font-family: "JetBrains Mono";
+	font-style: normal;
+	font-weight: 400;
+	src: url("/fonts/jetbrains-mono-v24-latin-regular.woff2") format("woff2"), url("/fonts/jetbrains-mono-v24-latin-regular.ttf") format("truetype");
+}
+
 /* jetbrains-mono-600 */
 @font-face {
 	font-display: swap;

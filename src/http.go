@@ -1,12 +1,13 @@
 package main
 
 import (
-	"compress/gzip"
 	"html/template"
 	"log"
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/klauspost/compress/gzhttp"
 )
 
 type Incident struct {
@@ -92,12 +93,7 @@ func index(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	// encode response in gzip
-	w.Header().Set("Content-Encoding", "gzip")
-	gw := gzip.NewWriter(w)
-	defer gw.Close()
-
-	if err := tmpl.ExecuteTemplate(gw, "index.html", data); err != nil {
+	if err := tmpl.ExecuteTemplate(w, "index.html", data); err != nil {
 		log.Printf("template execute error: %v", err)
 		renderError(w, http.StatusInternalServerError, "Internal server error")
 		return
@@ -135,12 +131,17 @@ func StartHttpServer() {
 	}
 
 	// http server
-	http.HandleFunc("/", index)
-	http.HandleFunc("/styles.css", styles)
-	http.HandleFunc("/favicon.ico", favicon)
-	http.HandleFunc("/robots.txt", robots)
-	http.Handle("/fonts/", http.StripPrefix("/fonts/", http.FileServer(http.Dir("www/fonts/"))))
-	if err := http.ListenAndServe(":8888", nil); err != nil {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", index)
+	mux.HandleFunc("/styles.css", styles)
+	mux.HandleFunc("/favicon.ico", favicon)
+	mux.HandleFunc("/robots.txt", robots)
+	mux.Handle("/fonts/", http.StripPrefix("/fonts/", http.FileServer(http.Dir("www/fonts/"))))
+
+	// wrap with gzip middleware
+	handler := gzhttp.GzipHandler(mux)
+
+	if err := http.ListenAndServe(":8888", handler); err != nil {
 		log.Fatalf("server failed: %v", err)
 	}
 }
