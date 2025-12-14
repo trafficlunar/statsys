@@ -32,6 +32,9 @@ type Service struct {
 	MinuteTimeline   []TimelineEntry
 	HourTimeline     []TimelineEntry
 	DayTimeline      []TimelineEntry
+	MinuteUptime     float64
+	HourUptime       float64
+	DayUptime        float64
 	Incidents        []Incident
 }
 
@@ -74,7 +77,7 @@ func renderError(w http.ResponseWriter, statusCode int, message string) {
 }
 
 func index(w http.ResponseWriter, req *http.Request) {
-	// Handle 404
+	// handle 404
 	if req.URL.Path != "/" {
 		renderError(w, http.StatusNotFound, "Page not found")
 		return

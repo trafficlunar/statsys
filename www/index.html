@@ -232,13 +232,31 @@
 			}
 
 			.bars-footer {
+				position: relative;
 				display: flex;
 				justify-content: space-between;
 				font-size: 0.75rem;
 				font-family: "JetBrains Mono", monospace;
 				margin-top: 0.5rem;
-				color: rgba(0, 0, 0, 0.5);
+				color: rgba(0, 0, 0, 0.4);
 				width: 100%;
+			}
+
+			.bars-footer span {
+				padding: 0 0.5rem;
+			}
+
+			.bars-footer hr {
+				flex-grow: 1;
+				border-color: rgba(0, 0, 0, 0.1);
+			}
+
+			.uptime-percentage {
+				position: absolute;
+				left: 50%;
+				transform: translateX(-50%);
+				background-color: white;
+				color: rgba(0, 0, 0, 0.5);
 			}
 
 			footer {
@@ -487,6 +505,8 @@
 
 						<div class="bars-footer">
 							<span>30 minutes ago</span>
+							<hr />
+							<span class="uptime-percentage">{{ $serviceStatus.MinuteUptime }}% uptime</span>
 							<span>now</span>
 						</div>
 						{{ else if eq $.View "hours" }}
@@ -503,6 +523,8 @@
 
 						<div class="bars-footer">
 							<span>24 hours ago</span>
+							<hr />
+							<span class="uptime-percentage">{{ $serviceStatus.HourUptime }}% uptime</span>
 							<span>now</span>
 						</div>
 
@@ -520,6 +542,8 @@
 
 						<div class="bars-footer">
 							<span>30 days ago</span>
+							<hr />
+							<span class="uptime-percentage">{{ $serviceStatus.DayUptime }}% uptime</span>
 							<span>today</span>
 						</div>
 						{{ end }}

@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"log"
+	"math"
 	"time"
 
 	_ "modernc.org/sqlite"
@@ -52,6 +53,7 @@ func InitializeDatabase() {
 		service.MinuteTimeline = generateRecap(rawTimeline, "minutes")
 		service.HourTimeline = generateRecap(rawTimeline, "hours")
 		service.DayTimeline = generateRecap(rawTimeline, "days")
+		calculateUptimePercentages(index)
 
 		// incidents
 		incidentRows, err := db.Query(`SELECT status, startTime, endTime FROM incidents WHERE service = ?`, service.Name)
@@ -189,11 +191,11 @@ func generateRecap(rawTimeline []TimelineEntry, view string) []TimelineEntry {
 
 		switch view {
 		case "minutes":
-			timestamp = now.Add(-time.Duration(30-i) * time.Minute).Truncate(time.Minute)
+			timestamp = now.Add(-time.Duration(limit-i) * time.Minute).Truncate(time.Minute)
 		case "hours":
-			timestamp = now.Add(-time.Duration(24-i) * time.Hour).Truncate(time.Hour)
+			timestamp = now.Add(-time.Duration(limit-i) * time.Hour).Truncate(time.Hour)
 		case "days":
-			day := now.AddDate(0, 0, -(30 - i))
+			day := now.AddDate(0, 0, -(limit - i))
 			timestamp = time.Date(day.Year(), day.Month(), day.Day(), 0, 0, 0, 0, time.UTC)
 		}
 
@@ -210,6 +212,40 @@ func generateRecap(rawTimeline []TimelineEntry, view string) []TimelineEntry {
 	}
 
 	return timeline
+}
+
+func calculateUptimePercentages(serviceIndex int) {
+	service := templateData.Services[serviceIndex]
+
+	calculateUptime := func(timeline []TimelineEntry) float64 {
+		if len(timeline) == 0 {
+			return 0.0
+		}
+
+		online := 0
+		total := 0
+
+		for _, entry := range timeline {
+			if entry.Status != "Unknown" {
+				total++
+				if entry.Status == "Online" {
+					online++
+				}
+			}
+		}
+
+		if total == 0 {
+			return 0.0
+		}
+
+		return math.Floor(float64(online)/float64(total)*100*100) / 100
+	}
+
+	service.MinuteUptime = calculateUptime(service.MinuteTimeline)
+	service.HourUptime = calculateUptime(service.HourTimeline)
+	service.DayUptime = calculateUptime(service.DayTimeline)
+
+	templateData.Services[serviceIndex] = service
 }
 
 // add entry to timeline and remove entries older than 30 days
@@ -297,6 +333,7 @@ func AddToTimeline(serviceIndex int, status string) {
 	}
 
 	templateData.Services[serviceIndex] = service
+	calculateUptimePercentages(serviceIndex)
 }
 
 func AddIncident(serviceIndex int, status string, startTime time.Time) {

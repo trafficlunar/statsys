@@ -1,6 +1,5 @@
 - [ ] Accessibility
 - [ ] Better mobile support
-- [ ] Uptime percentage
 - [ ] View incidents
 - [ ] Latency graphs?
-- [ ] README thumbnail
+- [ ] README
