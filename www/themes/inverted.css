@@ -1,0 +1,4 @@
+/* Dark mode (inverted) theme */
+html {
+	filter: invert();
+}

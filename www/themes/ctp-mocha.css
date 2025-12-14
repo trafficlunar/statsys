@@ -1,0 +1,151 @@
+/* Catppuccin Mocha Theme */
+body {
+	background-color: #1e1e2e; /* Base */
+	color: #cdd6f4; /* Text */
+}
+
+/* Grid */
+body::before {
+	background-image: linear-gradient(90deg, rgba(137, 180, 250, 0.08) 1px, transparent 1px),
+		linear-gradient(rgba(137, 180, 250, 0.08) 1px, transparent 1px);
+}
+
+main {
+	background-color: #181825; /* Mantle */
+	outline: 1px solid rgba(137, 180, 250, 0.12);
+}
+
+hr {
+	border-bottom: 2px dotted rgba(137, 180, 250, 0.4); /* Blue */
+}
+
+#emoticon {
+	color: #89b4fa; /* Blue */
+}
+
+#overall-status {
+	background-color: #89b4fa; /* Blue */
+	color: #181825; /* Mantle */
+}
+
+#pattern {
+	background-image: repeating-linear-gradient(-45deg, #89b4fa, #89b4fa 10px, transparent 0px, transparent 20px);
+}
+
+#last-updated {
+	color: rgba(166, 173, 200, 0.6); /* Overlay2 */
+}
+
+.service-name {
+	color: #cdd6f4; /* Text */
+}
+
+.service-name svg {
+	color: rgba(137, 180, 250, 0.4); /* Blue faded */
+}
+
+.service-name:hover svg {
+	color: #89b4fa; /* Blue */
+}
+
+/* Tooltip */
+.bars > div:hover .status-bar::after {
+	background-color: #181825; /* Mantle */
+	color: #cdd6f4; /* Text */
+	border: 1px solid rgba(137, 180, 250, 0.3);
+}
+
+.status-bar.Online {
+	background-color: #a6e3a1; /* Green */
+	border-color: #a6e3a1; /* Green */
+}
+
+.bars > div:hover .status-bar.Online {
+	background-color: #8ad882;
+}
+
+.status-bar.Unknown {
+	background: radial-gradient(circle at center, #313244 3px, transparent 3px); /* Surface0 */
+}
+
+.status-bar.Degraded {
+	background-color: #f9e2af; /* Yellow */
+	border-color: #f9e2af; /* Yellow */
+	background-image: linear-gradient(
+		45deg,
+		rgba(24, 24, 37, 0.2) 25%,
+		transparent 25%,
+		transparent 50%,
+		rgba(24, 24, 37, 0.2) 50%,
+		rgba(24, 24, 37, 0.2) 75%,
+		transparent 75%,
+		transparent
+	);
+	background-size: 8px 8px;
+}
+
+.status-bar.Offline {
+	background-color: #f38ba8; /* Red */
+	border-color: #f38ba8; /* Red */
+}
+
+.status-bar.Offline::before {
+	color: #181825; /* Mantle */
+}
+
+.bars-footer {
+	color: rgba(137, 180, 250, 0.5); /* Blue */
+}
+
+.bars-footer hr {
+	border-color: rgba(137, 180, 250, 0.2); /* Blue */
+}
+
+.uptime-percentage {
+	background-color: #181825; /* Mantle */
+	color: rgba(137, 180, 250, 0.85); /* Blue */
+}
+
+footer a {
+	color: #89b4fa; /* Blue */
+}
+
+footer a:hover {
+	color: #89b4fa; /* Blue */
+	filter: brightness(0.8);
+}
+
+/* Combobox */
+.combobox-trigger {
+	background-color: #11111b; /* Crust */
+	color: #cdd6f4; /* Text */
+	border: 1px solid rgba(88, 91, 112, 0.6); /* Overlay1 */
+}
+
+.combobox-trigger:hover {
+	background-color: #181825; /* Mantle */
+	border-color: rgba(137, 180, 250, 0.5);
+}
+
+.combobox-trigger div {
+	border-left: 1px solid rgba(88, 91, 112, 0.6);
+}
+
+.combobox-dropdown {
+	background-color: #11111b; /* Crust */
+	border: 1px solid rgba(137, 180, 250, 0.4);
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.combobox-option {
+	color: #cdd6f4; /* Text */
+}
+
+.combobox-option.selected {
+	background-color: rgba(137, 180, 250, 0.15);
+}
+
+.combobox-option:hover {
+	background-color: #89b4fa; /* Blue */
+	color: #181825; /* Mantle */
+}

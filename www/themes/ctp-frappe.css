@@ -1,0 +1,151 @@
+/* Catppuccin Frappé Theme */
+body {
+	background-color: #303446; /* Base */
+	color: #c6d0f5; /* Text */
+}
+
+/* Grid */
+body::before {
+	background-image: linear-gradient(90deg, rgba(140, 170, 238, 0.08) 1px, transparent 1px),
+		linear-gradient(rgba(140, 170, 238, 0.08) 1px, transparent 1px);
+}
+
+main {
+	background-color: #292c3c; /* Mantle */
+	outline: 1px solid rgba(140, 170, 238, 0.12);
+}
+
+hr {
+	border-bottom: 2px dotted rgba(140, 170, 238, 0.4); /* Blue */
+}
+
+#emoticon {
+	color: #8caaee; /* Blue */
+}
+
+#overall-status {
+	background-color: #8caaee; /* Blue */
+	color: #292c3c; /* Mantle */
+}
+
+#pattern {
+	background-image: repeating-linear-gradient(-45deg, #8caaee, #8caaee 10px, transparent 0px, transparent 20px);
+}
+
+#last-updated {
+	color: rgba(165, 173, 206, 0.6); /* Overlay2 */
+}
+
+.service-name {
+	color: #c6d0f5; /* Text */
+}
+
+.service-name svg {
+	color: rgba(140, 170, 238, 0.4); /* Blue faded */
+}
+
+.service-name:hover svg {
+	color: #8caaee; /* Blue */
+}
+
+/* Tooltip */
+.bars > div:hover .status-bar::after {
+	background-color: #292c3c; /* Crust */
+	color: #c6d0f5; /* Text */
+	border: 1px solid rgba(140, 170, 238, 0.3);
+}
+
+.status-bar.Online {
+	background-color: #a6d189; /* Green */
+	border-color: #a6d189; /* Green */
+}
+
+.bars > div:hover .status-bar.Online {
+	background-color: #81c563;
+}
+
+.status-bar.Unknown {
+	background: radial-gradient(circle at center, #414559 3px, transparent 3px); /* Surface0 */
+}
+
+.status-bar.Degraded {
+	background-color: #e5c890; /* Yellow */
+	border-color: #e5c890; /* Yellow */
+	background-image: linear-gradient(
+		45deg,
+		rgba(35, 38, 52, 0.2) 25%,
+		transparent 25%,
+		transparent 50%,
+		rgba(35, 38, 52, 0.2) 50%,
+		rgba(35, 38, 52, 0.2) 75%,
+		transparent 75%,
+		transparent
+	);
+	background-size: 8px 8px;
+}
+
+.status-bar.Offline {
+	background-color: #e78284; /* Red */
+	border-color: #e78284; /* Red */
+}
+
+.status-bar.Offline::before {
+	color: #292c3c; /* Mantle */
+}
+
+.bars-footer {
+	color: rgba(140, 170, 238, 0.5); /* Blue */
+}
+
+.bars-footer hr {
+	border-color: rgba(140, 170, 238, 0.2); /* Blue */
+}
+
+.uptime-percentage {
+	background-color: #292c3c; /* Mantle */
+	color: rgba(140, 170, 238, 0.85); /* Blue */
+}
+
+footer a {
+	color: #8caaee; /* Blue */
+}
+
+footer a:hover {
+	color: #8caaee; /* Blue */
+	filter: brightness(0.8);
+}
+
+/* Combobox */
+.combobox-trigger {
+	background-color: #232634; /* Crust */
+	color: #c6d0f5; /* Text */
+	border: 1px solid rgba(98, 104, 128, 0.6); /* Overlay1 */
+}
+
+.combobox-trigger:hover {
+	background-color: #292c3c; /* Mantle */
+	border-color: rgba(140, 170, 238, 0.5);
+}
+
+.combobox-trigger div {
+	border-left: 1px solid rgba(98, 104, 128, 0.6);
+}
+
+.combobox-dropdown {
+	background-color: #232634; /* Crust */
+	border: 1px solid rgba(140, 170, 238, 0.4);
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.combobox-option {
+	color: #c6d0f5; /* Text */
+}
+
+.combobox-option.selected {
+	background-color: rgba(140, 170, 238, 0.15);
+}
+
+.combobox-option:hover {
+	background-color: #8caaee; /* Blue */
+	color: #292c3c; /* Mantle */
+}

@@ -1,0 +1,142 @@
+/* Colored Theme */
+
+body {
+	background-color: rgba(37, 99, 235, 0.04);
+}
+
+body::before {
+	background-image: linear-gradient(90deg, rgba(37, 99, 235, 0.1) 1px, transparent 1px), linear-gradient(rgba(37, 99, 235, 0.1) 1px, transparent 1px);
+}
+
+main {
+	background-color: #f8fafc;
+	outline: 1px solid rgba(37, 99, 235, 0.1);
+}
+
+hr {
+	border-bottom: 2px dotted rgba(15, 23, 42, 0.15);
+}
+
+#emoticon {
+	color: #2563eb;
+}
+
+#overall-status {
+	background-color: #2563eb;
+	color: white;
+}
+
+#pattern {
+	background-image: repeating-linear-gradient(-45deg, #2563eb, #2563eb 10px, transparent 0px, transparent 20px);
+}
+
+#last-updated {
+	color: rgba(15, 23, 42, 0.6);
+}
+
+.service-name {
+	color: #0f172a;
+}
+
+.service-name svg {
+	color: rgba(37, 99, 235, 0.4);
+}
+
+.service-name:hover svg {
+	color: rgba(37, 99, 235, 0.9);
+}
+
+.bars > div:hover .status-bar::after {
+	background-color: #0f172a;
+	color: white;
+}
+
+.status-bar.Online {
+	background-color: #22c55e;
+	border-color: #16a34a;
+}
+
+.bars > div:hover .status-bar.Online {
+	background-color: #16a34a;
+}
+
+.status-bar.Degraded {
+	background-color: #facc15;
+	border-color: #eab308;
+	background-image: linear-gradient(
+		45deg,
+		rgba(255, 255, 255, 0.4) 25%,
+		transparent 25%,
+		transparent 50%,
+		rgba(255, 255, 255, 0.4) 50%,
+		rgba(255, 255, 255, 0.4) 75%,
+		transparent 75%,
+		transparent
+	);
+	background-size: 8px 8px;
+}
+
+.status-bar.Offline {
+	background-color: #ef4444;
+	border-color: #dc2626;
+}
+
+.status-bar.Offline::before {
+	color: white;
+}
+
+.status-bar.Unknown {
+	background: radial-gradient(circle at center, #94a3b8 3px, transparent 3px);
+}
+
+.bars-footer {
+	color: rgba(15, 23, 42, 0.45);
+}
+
+.bars-footer hr {
+	border-color: rgba(15, 23, 42, 0.15);
+}
+
+.uptime-percentage {
+	background-color: #f8fafc;
+	color: rgba(37, 99, 235, 0.75);
+}
+
+footer a {
+	color: #2563eb;
+}
+
+footer a:hover {
+	color: #1e40af;
+}
+
+.combobox-trigger {
+	background-color: white;
+	border: 1px solid rgba(15, 23, 42, 0.4);
+}
+
+.combobox-trigger:hover {
+	background-color: rgba(37, 99, 235, 0.05);
+}
+
+.combobox-trigger div {
+	border-left: 1px solid rgba(15, 23, 42, 0.4);
+}
+
+.combobox-dropdown {
+	background-color: white;
+	border: 1px solid rgba(15, 23, 42, 0.4);
+}
+
+.combobox-option {
+	color: #0f172a;
+}
+
+.combobox-option.selected {
+	background-color: rgba(37, 99, 235, 0.12);
+}
+
+.combobox-option:hover {
+	background-color: #2563eb;
+	color: white;
+}

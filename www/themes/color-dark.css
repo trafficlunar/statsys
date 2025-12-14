@@ -1,0 +1,146 @@
+/* Colored Dark Mode Theme */
+body {
+	background-color: #0a0f1a;
+	color: #e0e7ff;
+}
+
+/* Grid */
+body::before {
+	background-image: linear-gradient(90deg, rgba(59, 130, 246, 0.08) 1px, transparent 1px),
+		linear-gradient(rgba(59, 130, 246, 0.08) 1px, transparent 1px);
+}
+
+main {
+	background-color: #111827;
+	outline: 1px solid rgba(59, 130, 246, 0.15);
+}
+
+hr {
+	border-bottom: 2px dotted rgba(224, 231, 255, 0.2);
+}
+
+#emoticon {
+	color: #60a5fa;
+}
+
+#overall-status {
+	background-color: #1e40af;
+	color: #e0e7ff;
+}
+
+#pattern {
+	background-image: repeating-linear-gradient(-45deg, #1e40af, #1e40af 10px, transparent 0px, transparent 20px);
+}
+
+#last-updated {
+	color: rgba(224, 231, 255, 0.7);
+}
+
+.service-name {
+	color: #e2e8f0;
+}
+
+.service-name svg {
+	color: rgba(59, 130, 246, 0.4);
+}
+
+.service-name:hover svg {
+	color: rgba(96, 165, 250, 0.9);
+}
+
+/* Tooltip */
+.bars > div:hover .status-bar::after {
+	background-color: #1e293b;
+	color: #f1f5f9;
+	border: 1px solid rgba(38, 89, 172, 0.2);
+}
+
+.status-bar.Online {
+	background-color: #10b981;
+	border-color: #059669;
+}
+
+.status-bar.Unknown {
+	background: radial-gradient(circle at center, #475569 3px, transparent 3px);
+}
+
+.status-bar.Degraded {
+	background-color: #f59e0b;
+	border-color: #d97706;
+	background-image: linear-gradient(
+		45deg,
+		rgba(0, 0, 0, 0.2) 25%,
+		transparent 25%,
+		transparent 50%,
+		rgba(0, 0, 0, 0.2) 50%,
+		rgba(0, 0, 0, 0.2) 75%,
+		transparent 75%,
+		transparent
+	);
+	background-size: 8px 8px;
+}
+
+.status-bar.Offline {
+	background-color: #dc2626;
+	border-color: #b91c1c;
+}
+
+.status-bar.Offline::before {
+	color: #fef2f2;
+}
+
+.bars-footer {
+	color: rgba(224, 231, 255, 0.6);
+}
+
+.bars-footer hr {
+	border-color: rgba(224, 231, 255, 0.15);
+}
+
+.uptime-percentage {
+	background-color: #111827;
+	color: rgba(96, 165, 250, 0.8);
+}
+
+footer a {
+	color: #60a5fa;
+}
+
+footer a:hover {
+	color: #93c5fd;
+}
+
+/* Combobox */
+.combobox-trigger {
+	color: #e0e7ff;
+	background-color: #1e293b;
+	border: 1px solid rgba(71, 85, 105, 0.6);
+}
+
+.combobox-trigger:hover {
+	background-color: #334155;
+	border-color: rgba(96, 165, 250, 0.5);
+}
+
+.combobox-trigger div {
+	border-left: 1px solid rgba(71, 85, 105, 0.6);
+}
+
+.combobox-dropdown {
+	background-color: #1e293b;
+	border: 1px solid rgba(59, 130, 246, 0.4);
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.combobox-option {
+	color: #e2e8f0;
+}
+
+.combobox-option.selected {
+	background-color: rgba(59, 130, 246, 0.15);
+}
+
+.combobox-option:hover {
+	background-color: #2563eb;
+	color: white;
+}

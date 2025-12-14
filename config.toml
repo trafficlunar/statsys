@@ -9,16 +9,24 @@ link_url = "https://trafficlunar.net"
 # Users can still switch views manually
 #
 # Available options:
-# 'minutes' - past 30 minutes
-# 'hours'   - past 24 hours
-# 'days'    - past 30 days
+# "minutes" - past 30 minutes
+# "hours"   - past 24 hours
+# "days"    - past 30 days
 default_view = "hours"
+
+# Default theme for the status page
+# Available themes: https://github.com/trafficlunar/statsys/tree/main/www/themes
+# Defaults to "monochrome"
+default_theme = "color"
+# Set to true to allow users to switch the theme
+# Defaults to true
+enable_theme_switcher = true
 
 # List of services to monitor
 [[services]]
 name = "website"
 url = "http://localhost:9999/up"
-# Response time (in milliseconds) after which the service is considered "Degraded"
+# Response time (milliseconds) after which the service is marked as "Degraded"
 # Defaults to 1000ms
 latency_threshold = 1000
 

@@ -39,13 +39,15 @@ type Service struct {
 }
 
 type TemplateData struct {
-	Title         string
-	View          string
-	LinkText      string
-	LinkUrl       string
-	LastUpdated   int64
-	IsOperational bool
-	Services      []Service
+	Title               string
+	View                string
+	Theme               string
+	LinkText            string
+	LinkUrl             string
+	EnableThemeSwitcher bool
+	LastUpdated         int64
+	IsOperational       bool
+	Services            []Service
 }
 
 type ErrorTemplateData struct {
@@ -58,7 +60,8 @@ func ToUpper(s string) string {
 }
 
 var templateData = TemplateData{
-	LastUpdated: time.Now().UTC().UnixMilli(),
+	EnableThemeSwitcher: true,
+	LastUpdated:         time.Now().UTC().UnixMilli(),
 }
 var tmpl *template.Template
 var errorTmpl *template.Template
@@ -85,6 +88,7 @@ func index(w http.ResponseWriter, req *http.Request) {
 
 	data := templateData
 	data.View = req.URL.Query().Get("view")
+	data.Theme = req.URL.Query().Get("theme")
 
 	switch data.View {
 	case "hours", "minutes", "days":
@@ -94,6 +98,10 @@ func index(w http.ResponseWriter, req *http.Request) {
 	default:
 		renderError(w, http.StatusBadRequest, "Invalid view parameter")
 		return
+	}
+
+	if data.Theme == "" {
+		data.Theme = config.DefaultTheme
 	}
 
 	if err := tmpl.ExecuteTemplate(w, "index.html", data); err != nil {
@@ -139,6 +147,7 @@ func StartHttpServer() {
 	mux.HandleFunc("/styles.css", styles)
 	mux.HandleFunc("/favicon.ico", favicon)
 	mux.HandleFunc("/robots.txt", robots)
+	mux.Handle("/themes/", gzhttp.GzipHandler(http.StripPrefix("/themes/", http.FileServer(http.Dir("www/themes/")))))
 	mux.Handle("/fonts/", http.StripPrefix("/fonts/", http.FileServer(http.Dir("www/fonts/"))))
 
 	// wrap with gzip middleware

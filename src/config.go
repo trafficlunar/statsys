@@ -14,11 +14,13 @@ type ServiceConfig struct {
 }
 
 type Config struct {
-	Title       string          `toml:"title"`
-	LinkText    string          `toml:"link_text"`
-	LinkUrl     string          `toml:"link_url"`
-	DefaultView string          `toml:"default_view"`
-	Services    []ServiceConfig `toml:"services"`
+	Title               string          `toml:"title"`
+	LinkText            string          `toml:"link_text"`
+	LinkUrl             string          `toml:"link_url"`
+	DefaultView         string          `toml:"default_view"`
+	DefaultTheme        string          `toml:"default_theme"`
+	EnableThemeSwitcher bool            `toml:"enable_theme_switcher"`
+	Services            []ServiceConfig `toml:"services"`
 }
 
 var config Config
@@ -36,6 +38,7 @@ func LoadConfig() {
 	templateData.Title = config.Title
 	templateData.LinkText = config.LinkText
 	templateData.LinkUrl = config.LinkUrl
+	templateData.EnableThemeSwitcher = config.EnableThemeSwitcher
 	templateData.Services = make([]Service, len(config.Services))
 	for index, ser := range config.Services {
 		// default to 1000ms

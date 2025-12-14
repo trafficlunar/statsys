@@ -13,6 +13,7 @@
 			}
 
 			main {
+				position: relative;
 				display: flex;
 				flex-direction: column;
 				width: 100%;
@@ -103,7 +104,7 @@
 				display: flex;
 				flex-direction: column;
 				gap: 2.5rem;
-				margin-bottom: 4rem;
+				margin-bottom: 5rem;
 			}
 
 			.info {
@@ -150,7 +151,6 @@
 				display: flex;
 				justify-content: end;
 				width: 100%;
-				/* gap: 0.185rem; */
 			}
 
 			.bars > div {
@@ -169,14 +169,12 @@
 				transition: transform 100ms ease-in-out;
 				position: relative;
 				z-index: 0;
+				border-radius: 3px;
 			}
 
 			.bars > div:hover .status-bar {
 				transform: translateY(-3px);
-			}
-
-			.bars > div:hover .status-bar.Online {
-				background-color: rgba(0, 0, 0, 0.7);
+				filter: brightness(0.9);
 			}
 
 			.bars > div:hover .status-bar::after {
@@ -208,9 +206,9 @@
 			}
 
 			.status-bar.Degraded {
-				background-image: linear-gradient(to bottom, transparent 30%, white 30%), linear-gradient(to right, transparent 40%, white 40%);
-				background-size: 6px 7px;
-				background-position: 3px 4px;
+				background-color: white;
+				background-image: linear-gradient(45deg, black 25%, transparent 25%, transparent 50%, black 50%, black 75%, transparent 75%, transparent);
+				background-size: 8px 8px;
 			}
 
 			.status-bar.Offline {
@@ -276,12 +274,12 @@
 				color: black;
 			}
 
-			#combobox {
+			.combobox {
 				position: relative;
 				width: 8rem;
 			}
 
-			#combobox-trigger {
+			.combobox-trigger {
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
@@ -302,24 +300,23 @@
 				transition: background-color 100ms ease;
 			}
 
-			#combobox-trigger:hover {
+			.combobox-trigger:hover {
 				background-color: rgba(0, 0, 0, 0.03);
 			}
 
-			#combobox-trigger div {
+			.combobox-trigger div {
 				display: flex;
 				justify-content: center;
 				align-items: center;
 				border-left: 1px solid rgba(0, 0, 0, 0.5);
 			}
 
-			#combobox-trigger.open div svg {
+			.combobox-trigger.open div svg {
 				transform: rotate(180deg);
 			}
 
-			#combobox-dropdown {
+			.combobox-dropdown {
 				position: absolute;
-				bottom: calc(100% + 0.25rem);
 				width: 100%;
 				background-color: white;
 				border: 1px solid black;
@@ -327,9 +324,10 @@
 				flex-direction: column;
 				z-index: 100;
 				border-radius: 4px;
+				box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 			}
 
-			#combobox-dropdown.open {
+			.combobox-dropdown.open {
 				display: flex;
 			}
 
@@ -338,6 +336,7 @@
 				cursor: pointer;
 				color: black;
 				font-size: 0.825rem;
+				text-decoration: none;
 			}
 
 			.combobox-option.selected {
@@ -435,6 +434,8 @@
 				}
 			}
 		</style>
+
+		<link rel="stylesheet" href="/themes/{{ .Theme }}.css" />
 	</head>
 	<body>
 		<main>
@@ -442,6 +443,37 @@
 				<span>{{ if .IsOperational }} ( • ⩊ • ) {{ else }} ( 𖦹 ﹏ 𖦹 ) {{ end }}</span>
 			</div>
 			<h1>status — {{ .Title }}</h1>
+
+			{{ if .EnableThemeSwitcher }}
+			<div class="combobox" style="position: absolute; right: 2rem; top: 2rem">
+				<button class="combobox-trigger">
+					<span
+						>{{ if eq .Theme "colored-dark" }} colored dark {{ else if eq .Theme "ctp-latte" }} ctp latte {{ else if eq .Theme "ctp-frappe" }} ctp
+						frappé {{ else if eq .Theme "ctp-macchiato" }} ctp macchiato {{ else if eq .Theme "ctp-mocha" }} ctp mocha {{ else }} {{ .Theme }} {{ end
+						}}</span
+					>
+					<!-- arrow icon -->
+					<div>
+						<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
+							<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m7 10l5 5m0 0l5-5" />
+						</svg>
+					</div>
+				</button>
+
+				<div class="combobox-dropdown" style="top: calc(100% + 0.25rem)">
+					<a href="/?theme=monochrome&view={{ .View }}" class='combobox-option {{ if eq .Theme "monochrome" }}selected{{ end }}'>monochrome</a>
+					<a href="/?theme=inverted&view={{ .View }}" class='combobox-option {{ if eq .Theme "inverted" }}selected{{ end }}'>inverted</a>
+					<a href="/?theme=color&view={{ .View }}" class='combobox-option {{ if eq .Theme "color" }}selected{{ end }}'>color</a>
+					<a href="/?theme=colored-dark&view={{ .View }}" class='combobox-option {{ if eq .Theme "colored-dark" }}selected{{ end }}'>colored dark</a>
+					<a href="/?theme=ctp-latte&view={{ .View }}" class='combobox-option {{ if eq .Theme "ctp-latte" }}selected{{ end }}'>ctp latte</a>
+					<a href="/?theme=ctp-frappe&view={{ .View }}" class='combobox-option {{ if eq .Theme "ctp-frappe" }}selected{{ end }}'>ctp frappé</a>
+					<a href="/?theme=ctp-macchiato&view={{ .View }}" class='combobox-option {{ if eq .Theme "ctp-macchiato" }}selected{{ end }}'
+						>ctp macchiato</a
+					>
+					<a href="/?theme=ctp-mocha&view={{ .View }}" class='combobox-option {{ if eq .Theme "ctp-mocha" }}selected{{ end }}'>ctp mocha</a>
+				</div>
+			</div>
+			{{ end }}
 
 			<div style="display: flex">
 				<div id="overall-status">
@@ -465,7 +497,7 @@
 						<span>Degraded</span>
 					</div>
 					<div class="legend-item">
-						<div class="status-bar"></div>
+						<div class="status-bar Online"></div>
 						<span>Online</span>
 					</div>
 				</div>
@@ -555,8 +587,8 @@
 			</div>
 
 			<footer>
-				<div id="combobox">
-					<button id="combobox-trigger">
+				<div class="combobox">
+					<button class="combobox-trigger">
 						<span>{{ if eq .View "minutes" }} 30 minutes {{ else if eq .View "hours" }} 24 hours {{ else }} 30 days {{ end }}</span>
 						<!-- arrow icon -->
 						<div>
@@ -566,10 +598,10 @@
 						</div>
 					</button>
 
-					<div id="combobox-dropdown">
-						<a href="/?view=minutes" class='combobox-option {{ if eq .View "minutes" }}selected{{ end }}' data-value="minutes">30 minutes</a>
-						<a href="/?view=hours" class='combobox-option {{ if eq .View "hours" }}selected{{ end }}' data-value="hours">24 hours</a>
-						<a href="/?view=days" class='combobox-option {{ if eq .View "days" }}selected{{ end }}' data-value="days">30 days</a>
+					<div class="combobox-dropdown" style="bottom: calc(100% + 0.25rem)">
+						<a href="/?view=minutes&theme={{ .Theme }}" class='combobox-option {{ if eq .View "minutes" }}selected{{ end }}'>30 minutes</a>
+						<a href="/?view=hours&theme={{ .Theme }}" class='combobox-option {{ if eq .View "hours" }}selected{{ end }}'>24 hours</a>
+						<a href="/?view=days&theme={{ .Theme }}" class='combobox-option {{ if eq .View "days" }}selected{{ end }}'>30 days</a>
 					</div>
 				</div>
 
@@ -601,12 +633,16 @@
 			setInterval(update, 60000);
 
 			// combobox
-			const trigger = document.querySelector("#combobox-trigger");
-			const dropdown = document.querySelector("#combobox-dropdown");
+			const triggers = document.querySelectorAll(".combobox-trigger");
 
-			trigger.addEventListener("click", (e) => {
-				trigger.classList.toggle("open");
-				dropdown.classList.toggle("open");
+			triggers.forEach((trigger) => {
+				trigger.addEventListener("click", () => {
+					const parent = trigger.parentElement;
+					const dropdown = parent.querySelector(".combobox-dropdown");
+
+					trigger.classList.toggle("open");
+					dropdown.classList.toggle("open");
+				});
 			});
 		</script>
 	</body>

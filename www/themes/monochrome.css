@@ -1,0 +1,130 @@
+/* Default Theme */
+body {
+	background-color: #fcfcfc;
+}
+
+/* Grid */
+body::before {
+	background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px), linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+}
+
+main {
+	background-color: white;
+	outline: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+hr {
+	border-bottom: 2px dotted rgba(0, 0, 0, 0.1);
+}
+
+#overall-status {
+	background-color: black;
+	color: white;
+}
+
+#pattern {
+	background-image: repeating-linear-gradient(-45deg, #000, #000 10px, transparent 0px, transparent 20px);
+}
+
+#last-updated {
+	color: rgba(0, 0, 0, 0.6);
+}
+
+.service-name {
+	color: black;
+}
+
+.service-name svg {
+	color: rgba(0, 0, 0, 0.2);
+}
+
+.service-name:hover svg {
+	color: rgba(0, 0, 0, 0.8);
+}
+
+.status-bar {
+	background-color: black;
+	border: 1px solid black;
+}
+
+/* Tooltip */
+.bars > div:hover .status-bar::after {
+	background-color: black;
+	color: white;
+}
+
+.bars > div:hover .status-bar.Online {
+	background-color: rgba(0, 0, 0, 0.7);
+}
+
+.status-bar.Unknown {
+	background-color: transparent;
+	background: radial-gradient(circle at center, rgb(235, 235, 235) 3px, transparent 3px);
+}
+
+.status-bar.Degraded {
+	background-image: linear-gradient(to bottom, transparent 30%, white 30%), linear-gradient(to right, transparent 40%, white 40%);
+	background-size: 6px 7px;
+	background-position: 3px 4px;
+}
+
+.status-bar.Offline {
+	background-color: white;
+}
+
+.status-bar.Offline::before {
+	color: black;
+}
+
+.bars-footer {
+	color: rgba(0, 0, 0, 0.4);
+}
+
+.bars-footer hr {
+	border-color: rgba(0, 0, 0, 0.1);
+}
+
+.uptime-percentage {
+	background-color: white;
+	color: rgba(0, 0, 0, 0.5);
+}
+
+footer a {
+	color: rgba(0, 0, 0, 0.3);
+}
+
+footer a:hover {
+	color: black;
+}
+
+/* Combobox */
+.combobox-trigger {
+	background-color: white;
+	border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.combobox-trigger:hover {
+	background-color: rgba(0, 0, 0, 0.03);
+}
+
+.combobox-trigger div {
+	border-left: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.combobox-dropdown {
+	background-color: white;
+	border: 1px solid black;
+}
+
+.combobox-option {
+	color: black;
+}
+
+.combobox-option.selected {
+	background-color: rgba(0, 0, 0, 0.08);
+}
+
+.combobox-option:hover {
+	background-color: black;
+	color: white;
+}
