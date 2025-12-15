@@ -1,4 +1,4 @@
-package main
+package internal
 
 import (
 	"database/sql"
@@ -12,7 +12,7 @@ import (
 var STATUS_PRIORITY = map[string]int{"Offline": 2, "Degraded": 1, "Online": 0}
 var db *sql.DB
 
-func InitializeDatabase() {
+func InitDatabase() {
 	// open/create database
 	var err error
 	db, err = sql.Open("sqlite", "status.db")

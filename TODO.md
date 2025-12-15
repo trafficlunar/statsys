@@ -3,3 +3,4 @@
 - [ ] View incidents
 - [ ] Latency graphs?
 - [ ] README
+- [ ] Site metadata

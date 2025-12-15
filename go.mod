@@ -1,4 +1,4 @@
-module status-page
+module statsys
 
 go 1.25.4
 

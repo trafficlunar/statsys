@@ -86,7 +86,7 @@ hr {
 }
 
 .status-bar.Unknown {
-	background: radial-gradient(circle at center, #94a3b8 3px, transparent 3px);
+	background: radial-gradient(circle at center, rgba(0, 0, 0, 0.1) 3px, transparent 3px);
 }
 
 .bars-footer {
@@ -111,7 +111,7 @@ footer a:hover {
 }
 
 .combobox-trigger {
-	background-color: white;
+	background-color: #f8fafc;
 	border: 1px solid rgba(15, 23, 42, 0.4);
 }
 
@@ -124,7 +124,7 @@ footer a:hover {
 }
 
 .combobox-dropdown {
-	background-color: white;
+	background-color: #f8fafc;
 	border: 1px solid rgba(15, 23, 42, 0.4);
 }
 
