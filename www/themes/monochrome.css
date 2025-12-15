@@ -43,7 +43,6 @@ hr {
 }
 
 .status-bar {
-	background-color: black;
 	border: 1px solid black;
 }
 
@@ -57,15 +56,17 @@ hr {
 	background-color: rgba(0, 0, 0, 0.7);
 }
 
-.status-bar.Unknown {
-	background-color: transparent;
-	background: radial-gradient(circle at center, rgb(235, 235, 235) 3px, transparent 3px);
+.status-bar.Online {
+	background-color: black;
+}
+
+.status-bar.Unknown::before {
+	background-color: rgb(235, 235, 235);
 }
 
 .status-bar.Degraded {
-	background-image: linear-gradient(to bottom, transparent 30%, white 30%), linear-gradient(to right, transparent 40%, white 40%);
-	background-size: 6px 7px;
-	background-position: 3px 4px;
+	background-color: white;
+	background-image: linear-gradient(45deg, black 25%, transparent 25%, transparent 50%, black 50%, black 75%, transparent 75%, transparent);
 }
 
 .status-bar.Offline {

@@ -60,8 +60,8 @@ hr {
 	border-color: #059669;
 }
 
-.status-bar.Unknown {
-	background: radial-gradient(circle at center, #475569 3px, transparent 3px);
+.status-bar.Unknown::before {
+	background-color: #475569;
 }
 
 .status-bar.Degraded {

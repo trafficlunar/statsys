@@ -64,8 +64,8 @@ hr {
 	background-color: #81c563;
 }
 
-.status-bar.Unknown {
-	background: radial-gradient(circle at center, #414559 3px, transparent 3px); /* Surface0 */
+.status-bar.Unknown::before {
+	background-color: #414559; /* Surface0 */
 }
 
 .status-bar.Degraded {

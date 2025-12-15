@@ -85,8 +85,8 @@ hr {
 	color: white;
 }
 
-.status-bar.Unknown {
-	background: radial-gradient(circle at center, rgba(0, 0, 0, 0.1) 3px, transparent 3px);
+.status-bar.Unknown::before {
+	background-color: rgba(0, 0, 0, 0.1);
 }
 
 .bars-footer {

@@ -163,7 +163,7 @@
 			}
 
 			.status-bar {
-				background-color: black;
+				background-color: transparent;
 				border: 1px solid black;
 				width: calc(100% - 0.188rem);
 				height: 100%;
@@ -200,20 +200,29 @@
 				z-index: 10;
 			}
 
+			.status-bar.Online {
+				background-color: black;
+			}
+
 			.status-bar.Unknown {
-				background-color: transparent;
-				background: radial-gradient(circle at center, rgb(235, 235, 235) 3px, transparent 3px);
 				border: 0;
+			}
+
+			.status-bar.Unknown::before {
+				content: "";
+				width: 6px;
+				height: 6px;
+				border-radius: 100%;
+				background: rgb(235, 235, 235);
+				position: absolute;
+				inset: 0;
+				margin: auto;
 			}
 
 			.status-bar.Degraded {
 				background-color: white;
 				background-image: linear-gradient(45deg, black 25%, transparent 25%, transparent 50%, black 50%, black 75%, transparent 75%, transparent);
 				background-size: 8px 8px;
-			}
-
-			.status-bar.Offline {
-				background-color: white;
 			}
 
 			.status-bar.Offline::before {
@@ -449,8 +458,8 @@
 			<div class="combobox" style="position: absolute; right: 2rem; top: 2rem">
 				<button class="combobox-trigger">
 					<span
-						>{{ if eq .Theme "colored-dark" }} colored dark {{ else if eq .Theme "ctp-latte" }} ctp latte {{ else if eq .Theme "ctp-frappe" }} ctp
-						frappé {{ else if eq .Theme "ctp-macchiato" }} ctp macchiato {{ else if eq .Theme "ctp-mocha" }} ctp mocha {{ else }} {{ .Theme }} {{ end
+						>{{ if eq .Theme "color-dark" }} color dark {{ else if eq .Theme "ctp-latte" }} ctp latte {{ else if eq .Theme "ctp-frappe" }} ctp frappé
+						{{ else if eq .Theme "ctp-macchiato" }} ctp macchiato {{ else if eq .Theme "ctp-mocha" }} ctp mocha {{ else }} {{ .Theme }} {{ end
 						}}</span
 					>
 					<!-- arrow icon -->
@@ -465,7 +474,7 @@
 					<a href="/?theme=monochrome&view={{ .View }}" class='combobox-option {{ if eq .Theme "monochrome" }}selected{{ end }}'>monochrome</a>
 					<a href="/?theme=inverted&view={{ .View }}" class='combobox-option {{ if eq .Theme "inverted" }}selected{{ end }}'>inverted</a>
 					<a href="/?theme=color&view={{ .View }}" class='combobox-option {{ if eq .Theme "color" }}selected{{ end }}'>color</a>
-					<a href="/?theme=colored-dark&view={{ .View }}" class='combobox-option {{ if eq .Theme "colored-dark" }}selected{{ end }}'>colored dark</a>
+					<a href="/?theme=color-dark&view={{ .View }}" class='combobox-option {{ if eq .Theme "color-dark" }}selected{{ end }}'>color dark</a>
 					<a href="/?theme=ctp-latte&view={{ .View }}" class='combobox-option {{ if eq .Theme "ctp-latte" }}selected{{ end }}'>ctp latte</a>
 					<a href="/?theme=ctp-frappe&view={{ .View }}" class='combobox-option {{ if eq .Theme "ctp-frappe" }}selected{{ end }}'>ctp frappé</a>
 					<a href="/?theme=ctp-macchiato&view={{ .View }}" class='combobox-option {{ if eq .Theme "ctp-macchiato" }}selected{{ end }}'
