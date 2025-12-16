@@ -1,151 +1,40 @@
 /* Catppuccin Frappé Theme */
-body {
-	background-color: #303446; /* Base */
-	color: #c6d0f5; /* Text */
-}
+:root {
+	--bg-body: #303446; /* Base */
+	--bg-main: #292c3c; /* Mantle */
 
-/* Grid */
-body::before {
-	background-image: linear-gradient(90deg, rgba(140, 170, 238, 0.08) 1px, transparent 1px),
-		linear-gradient(rgba(140, 170, 238, 0.08) 1px, transparent 1px);
-}
+	--text-primary: #c6d0f5; /* Text */
+	--text-secondary: rgba(165, 173, 206, 0.6); /* Overlay2 @ 60% */
 
-main {
-	background-color: #292c3c; /* Mantle */
-	outline: 1px solid rgba(140, 170, 238, 0.12);
-}
+	--border-primary: #8caaee; /* Blue */
+	--border-secondary: rgba(98, 104, 128, 0.6); /* Overlay1 @ 60% */
+	--border-subtle: rgba(140, 170, 238, 0.2); /* Blue @ 20% */
+	--border-dotted: rgba(140, 170, 238, 0.4); /* Blue @ 40% */
+	--border-outline: rgba(140, 170, 238, 0.12); /* Blue @ 12% */
 
-hr {
-	border-bottom: 2px dotted rgba(140, 170, 238, 0.4); /* Blue */
-}
+	--accent-primary: #8caaee; /* Blue */
+	--accent-secondary: #292c3c; /* Mantle */
+	--accent-tertiary: rgba(140, 170, 238, 0.85); /* Blue @ 85% */
+	--accent-muted: rgba(140, 170, 238, 0.5); /* Blue @ 50% */
+	--accent-faded: rgba(140, 170, 238, 0.4); /* Blue @ 40% */
 
-#emoticon {
-	color: #8caaee; /* Blue */
-}
+	--status-online: #a6d189; /* Green */
+	--status-online-border: #a6d189; /* Green */
+	--status-degraded: #e5c890; /* Yellow */
+	--status-degraded-pattern: rgba(35, 38, 52, 0.35); /* Crust @ 35% */
+	--status-degraded-border: #e5c890; /* Yellow */
+	--status-offline: #e78284; /* Red */
+	--status-offline-x: #292c3c; /* Mantle */
+	--status-offline-border: #e78284; /* Red */
+	--status-unknown: #414559; /* Surface0 */
 
-#overall-status {
-	background-color: #8caaee; /* Blue */
-	color: #292c3c; /* Mantle */
-}
+	--hover-bg: rgba(140, 170, 238, 0.12); /* Blue @ 12% */
+	--hover-text: #292c3c; /* Mantle */
+	--selected-bg: rgba(140, 170, 238, 0.15); /* Blue @ 15% */
 
-#pattern {
-	background-image: repeating-linear-gradient(-45deg, #8caaee, #8caaee 10px, transparent 0px, transparent 20px);
-}
+	--tooltip-bg: #292c3c; /* Mantle */
+	--tooltip-text: #c6d0f5; /* Text */
+	--tooltip-border: rgba(140, 170, 238, 0.3); /* Blue @ 30% */
 
-#last-updated {
-	color: rgba(165, 173, 206, 0.6); /* Overlay2 */
-}
-
-.service-name {
-	color: #c6d0f5; /* Text */
-}
-
-.service-name svg {
-	color: rgba(140, 170, 238, 0.4); /* Blue faded */
-}
-
-.service-name:hover svg {
-	color: #8caaee; /* Blue */
-}
-
-/* Tooltip */
-.bars > div:hover .status-bar::after {
-	background-color: #292c3c; /* Crust */
-	color: #c6d0f5; /* Text */
-	border: 1px solid rgba(140, 170, 238, 0.3);
-}
-
-.status-bar.Online {
-	background-color: #a6d189; /* Green */
-	border-color: #a6d189; /* Green */
-}
-
-.bars > div:hover .status-bar.Online {
-	background-color: #81c563;
-}
-
-.status-bar.Unknown::before {
-	background-color: #414559; /* Surface0 */
-}
-
-.status-bar.Degraded {
-	background-color: #e5c890; /* Yellow */
-	border-color: #e5c890; /* Yellow */
-	background-image: linear-gradient(
-		45deg,
-		rgba(35, 38, 52, 0.2) 25%,
-		transparent 25%,
-		transparent 50%,
-		rgba(35, 38, 52, 0.2) 50%,
-		rgba(35, 38, 52, 0.2) 75%,
-		transparent 75%,
-		transparent
-	);
-	background-size: 8px 8px;
-}
-
-.status-bar.Offline {
-	background-color: #e78284; /* Red */
-	border-color: #e78284; /* Red */
-}
-
-.status-bar.Offline::before {
-	color: #292c3c; /* Mantle */
-}
-
-.bars-footer {
-	color: rgba(140, 170, 238, 0.5); /* Blue */
-}
-
-.bars-footer hr {
-	border-color: rgba(140, 170, 238, 0.2); /* Blue */
-}
-
-.uptime-percentage {
-	background-color: #292c3c; /* Mantle */
-	color: rgba(140, 170, 238, 0.85); /* Blue */
-}
-
-footer a {
-	color: #8caaee; /* Blue */
-}
-
-footer a:hover {
-	color: #8caaee; /* Blue */
-	filter: brightness(0.8);
-}
-
-/* Combobox */
-.combobox-trigger {
-	background-color: #232634; /* Crust */
-	color: #c6d0f5; /* Text */
-	border: 1px solid rgba(98, 104, 128, 0.6); /* Overlay1 */
-}
-
-.combobox-trigger:hover {
-	background-color: #292c3c; /* Mantle */
-	border-color: rgba(140, 170, 238, 0.5);
-}
-
-.combobox-trigger div {
-	border-left: 1px solid rgba(98, 104, 128, 0.6);
-}
-
-.combobox-dropdown {
-	background-color: #232634; /* Crust */
-	border: 1px solid rgba(140, 170, 238, 0.4);
-	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-}
-
-.combobox-option {
-	color: #c6d0f5; /* Text */
-}
-
-.combobox-option.selected {
-	background-color: rgba(140, 170, 238, 0.15);
-}
-
-.combobox-option:hover {
-	background-color: #8caaee; /* Blue */
-	color: #292c3c; /* Mantle */
+	--shadow-color: rgba(0, 0, 0, 0.4); /* Black @ 40% */
 }

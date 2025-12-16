@@ -1,131 +1,39 @@
-/* Default Theme */
-body {
-	background-color: #fcfcfc;
-}
+/* Monochrome Theme - default (as seen in index.html) */
+:root {
+	--bg-body: #fafafa;
+	--bg-main: white;
+	--text-primary: black;
+	--text-secondary: rgba(0, 0, 0, 0.6);
 
-/* Grid */
-body::before {
-	background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px), linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px);
-}
+	--border-primary: black;
+	--border-secondary: rgba(0, 0, 0, 0.5);
+	--border-subtle: rgba(0, 0, 0, 0.1);
+	--border-dotted: rgba(0, 0, 0, 0.1);
+	--border-outline: rgba(0, 0, 0, 0.04);
 
-main {
-	background-color: white;
-	outline: 1px solid rgba(0, 0, 0, 0.04);
-}
+	--accent-primary: black;
+	--accent-secondary: white;
+	--accent-tertiary: rgba(0, 0, 0, 0.4);
+	--accent-muted: rgba(0, 0, 0, 0.3);
+	--accent-faded: rgba(0, 0, 0, 0.2);
 
-hr {
-	border-bottom: 2px dotted rgba(0, 0, 0, 0.1);
-}
+	--status-online: black;
+	--status-online-border: unset;
+	--status-degraded: white;
+	--status-degraded-pattern: black;
+	--status-degraded-border: unset;
+	--status-offline: white;
+	--status-offline-x: black;
+	--status-offline-border: unset;
+	--status-unknown: rgb(235, 235, 235);
 
-#overall-status {
-	background-color: black;
-	color: white;
-}
+	--hover-bg: rgba(0, 0, 0, 0.03);
+	--hover-text: black;
+	--selected-bg: rgba(0, 0, 0, 0.08);
 
-#pattern {
-	background-image: repeating-linear-gradient(-45deg, #000, #000 10px, transparent 0px, transparent 20px);
-}
+	--tooltip-bg: black;
+	--tooltip-text: white;
+	--tooltip-border: transparent;
 
-#last-updated {
-	color: rgba(0, 0, 0, 0.6);
-}
-
-.service-name {
-	color: black;
-}
-
-.service-name svg {
-	color: rgba(0, 0, 0, 0.2);
-}
-
-.service-name:hover svg {
-	color: rgba(0, 0, 0, 0.8);
-}
-
-.status-bar {
-	border: 1px solid black;
-}
-
-/* Tooltip */
-.bars > div:hover .status-bar::after {
-	background-color: black;
-	color: white;
-}
-
-.bars > div:hover .status-bar.Online {
-	background-color: rgba(0, 0, 0, 0.7);
-}
-
-.status-bar.Online {
-	background-color: black;
-}
-
-.status-bar.Unknown::before {
-	background-color: rgb(235, 235, 235);
-}
-
-.status-bar.Degraded {
-	background-color: white;
-	background-image: linear-gradient(45deg, black 25%, transparent 25%, transparent 50%, black 50%, black 75%, transparent 75%, transparent);
-}
-
-.status-bar.Offline {
-	background-color: white;
-}
-
-.status-bar.Offline::before {
-	color: black;
-}
-
-.bars-footer {
-	color: rgba(0, 0, 0, 0.4);
-}
-
-.bars-footer hr {
-	border-color: rgba(0, 0, 0, 0.1);
-}
-
-.uptime-percentage {
-	background-color: white;
-	color: rgba(0, 0, 0, 0.5);
-}
-
-footer a {
-	color: rgba(0, 0, 0, 0.3);
-}
-
-footer a:hover {
-	color: black;
-}
-
-/* Combobox */
-.combobox-trigger {
-	background-color: white;
-	border: 1px solid rgba(0, 0, 0, 0.5);
-}
-
-.combobox-trigger:hover {
-	background-color: rgba(0, 0, 0, 0.03);
-}
-
-.combobox-trigger div {
-	border-left: 1px solid rgba(0, 0, 0, 0.5);
-}
-
-.combobox-dropdown {
-	background-color: white;
-	border: 1px solid black;
-}
-
-.combobox-option {
-	color: black;
-}
-
-.combobox-option.selected {
-	background-color: rgba(0, 0, 0, 0.08);
-}
-
-.combobox-option:hover {
-	background-color: black;
-	color: white;
+	--shadow-color: rgba(0, 0, 0, 0.1);
 }

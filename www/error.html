@@ -9,7 +9,23 @@
 		<link rel="stylesheet" href="/styles.css" />
 		<style>
 			body {
+				background-color: #fafafa;
+				font-family: "Inter", sans-serif;
+				height: 100vh;
+				margin: 0;
+				display: flex;
+				justify-content: center;
 				align-items: center;
+			}
+
+			body::before {
+				content: "";
+				position: fixed;
+				inset: 0;
+				background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px), linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+				background-size: 48px 48px;
+				background-position: center;
+				pointer-events: none;
 			}
 
 			main {

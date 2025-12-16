@@ -238,7 +238,7 @@ func calculateUptimePercentages(serviceIndex int) {
 			return 0.0
 		}
 
-		return math.Floor(float64(online)/float64(total)*100*100) / 100
+		return math.Floor(float64(online)/float64(total)*100*10) / 10
 	}
 
 	service.MinuteUptime = calculateUptime(service.MinuteTimeline)

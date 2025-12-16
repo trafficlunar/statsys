@@ -8,8 +8,57 @@
 		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 		<link rel="stylesheet" href="/styles.css" />
 		<style>
+			:root {
+				--bg-body: #fafafa;
+				--bg-main: white;
+				--text-primary: black;
+				--text-secondary: rgba(0, 0, 0, 0.6);
+
+				--border-primary: black;
+				--border-secondary: rgba(0, 0, 0, 0.5);
+				--border-subtle: rgba(0, 0, 0, 0.1);
+				--border-dotted: rgba(0, 0, 0, 0.1);
+				--border-outline: rgba(0, 0, 0, 0.04);
+
+				--accent-primary: black;
+				--accent-secondary: white;
+				--accent-tertiary: rgba(0, 0, 0, 0.4);
+				--accent-muted: rgba(0, 0, 0, 0.3);
+				--accent-faded: rgba(0, 0, 0, 0.2);
+
+				--status-online: black;
+				--status-online-border: unset;
+				--status-degraded: white;
+				--status-degraded-pattern: black;
+				--status-degraded-border: unset;
+				--status-offline: white;
+				--status-offline-x: black;
+				--status-offline-border: unset;
+				--status-unknown: rgb(235, 235, 235);
+
+				--hover-bg: rgba(0, 0, 0, 0.03);
+				--hover-text: black;
+				--selected-bg: rgba(0, 0, 0, 0.08);
+
+				--tooltip-bg: black;
+				--tooltip-text: white;
+				--tooltip-border: transparent;
+
+				--shadow-color: rgba(0, 0, 0, 0.1);
+			}
+
 			* {
 				box-sizing: border-box;
+			}
+
+			body {
+				background-color: var(--bg-body);
+				color: var(--text-primary);
+				font-family: "Inter", sans-serif;
+				height: 100vh;
+				margin: 0;
+				display: flex;
+				justify-content: center;
 			}
 
 			main {
@@ -19,11 +68,11 @@
 				width: 100%;
 				height: max-content;
 				min-height: 100%;
-				max-width: 40rem;
+				max-width: 39.625rem;
 				padding: 4rem 2rem 1.5rem;
-				background-color: white;
+				background-color: var(--bg-main);
 				z-index: 1;
-				outline: 1px solid rgba(0, 0, 0, 0.04);
+				outline: 1px solid var(--border-outline);
 			}
 
 			h1 {
@@ -31,11 +80,12 @@
 				margin-top: 1rem;
 				margin-bottom: 1rem;
 				font-size: 1.5rem;
+				color: var(--text-primary);
 			}
 
 			hr {
 				border: 0;
-				border-bottom: 2px dotted rgba(0, 0, 0, 0.1);
+				border-bottom: 2px dotted var(--border-dotted);
 			}
 
 			p {
@@ -47,6 +97,7 @@
 				display: flex;
 				align-items: end;
 				height: 4.375rem;
+				color: var(--accent-primary);
 			}
 
 			#emoticon span {
@@ -55,8 +106,8 @@
 			}
 
 			#overall-status {
-				background-color: black;
-				color: white;
+				background-color: var(--accent-primary);
+				color: var(--accent-secondary);
 				padding: 0.5rem;
 				font-size: 0.875rem;
 				width: fit-content;
@@ -64,7 +115,7 @@
 
 			#pattern {
 				flex-grow: 1;
-				background-image: repeating-linear-gradient(-45deg, #000, #000 10px, transparent 0px, transparent 20px);
+				background-image: repeating-linear-gradient(-45deg, var(--accent-primary), var(--accent-primary) 10px, transparent 0px, transparent 20px);
 			}
 
 			#caption {
@@ -76,7 +127,7 @@
 			}
 
 			#last-updated {
-				color: rgba(0, 0, 0, 0.6);
+				color: var(--text-secondary);
 				font-size: 0.875rem;
 				margin: 0;
 			}
@@ -118,7 +169,7 @@
 				margin: 0;
 				font-size: 1.25rem;
 				text-decoration: none;
-				color: black;
+				color: var(--text-primary);
 				font-weight: 600;
 
 				display: flex;
@@ -128,11 +179,11 @@
 
 			.service-name svg {
 				height: 1rem;
-				color: rgba(0, 0, 0, 0.2);
+				color: var(--accent-faded);
 			}
 
 			.service-name:hover svg {
-				color: rgba(0, 0, 0, 0.8);
+				color: var(--accent-primary);
 			}
 
 			.status {
@@ -157,20 +208,22 @@
 			.bars > div {
 				display: flex;
 				justify-content: center;
-				width: calc(100% / 30);
+				width: 1.188rem;
 				height: 2.5rem;
-				position: relative;
+				flex-shrink: 0;
 			}
 
 			.status-bar {
 				background-color: transparent;
 				border: 1px solid black;
-				width: calc(100% - 0.188rem);
+				width: 1rem;
 				height: 100%;
-				transition: transform 100ms ease-in-out;
-				position: relative;
+				transition: transform 70ms ease-out;
 				z-index: 0;
 				border-radius: 3px;
+
+				/* this weird hack fixes some inconsistencies  */
+				transform: translateX(0px);
 			}
 
 			.bars > div:hover .status-bar {
@@ -183,14 +236,15 @@
 
 				position: absolute;
 				bottom: 100%;
-				left: 50%;
+				left: var(--tooltip-left, 50%);
 
 				margin-bottom: 0.5rem;
 				font-family: "JetBrains Mono", monospace;
 				font-weight: 600;
 
-				background-color: black;
-				color: white;
+				background-color: var(--tooltip-bg);
+				color: var(--tooltip-text);
+				border: 1px solid var(--tooltip-border);
 				padding: 0.45rem 0.5rem;
 				border-radius: 0.25rem;
 				font-size: 0.75rem;
@@ -201,7 +255,8 @@
 			}
 
 			.status-bar.Online {
-				background-color: black;
+				background-color: var(--status-online);
+				border-color: var(--status-online-border);
 			}
 
 			.status-bar.Unknown {
@@ -213,16 +268,32 @@
 				width: 6px;
 				height: 6px;
 				border-radius: 100%;
-				background: rgb(235, 235, 235);
+				background: var(--status-unknown);
+				border-color: var(--status-unknown-border);
 				position: absolute;
 				inset: 0;
 				margin: auto;
 			}
 
 			.status-bar.Degraded {
-				background-color: white;
-				background-image: linear-gradient(45deg, black 25%, transparent 25%, transparent 50%, black 50%, black 75%, transparent 75%, transparent);
+				background-color: var(--status-degraded);
+				background-image: linear-gradient(
+					45deg,
+					var(--status-degraded-pattern) 25%,
+					transparent 25%,
+					transparent 50%,
+					var(--status-degraded-pattern) 50%,
+					var(--status-degraded-pattern) 75%,
+					transparent 75%,
+					transparent
+				);
 				background-size: 8px 8px;
+				border-color: var(--status-degraded-border);
+			}
+
+			.status-bar.Offline {
+				background-color: var(--status-offline);
+				border-color: var(--status-offline-border);
 			}
 
 			.status-bar.Offline::before {
@@ -234,9 +305,22 @@
 				justify-content: center;
 				font-size: 2rem;
 				font-weight: 700;
-				color: black;
+				color: var(--status-offline-x);
 				pointer-events: none;
 				overflow: hidden;
+			}
+
+			/* only show when screen is small */
+			.bars-gradient {
+				display: none !important;
+				position: absolute !important;
+				left: 0;
+				bottom: 0;
+				width: 2.5rem !important;
+				height: 3rem !important;
+				background: linear-gradient(to left, transparent, var(--bg-main));
+				pointer-events: none;
+				z-index: 10;
 			}
 
 			.bars-footer {
@@ -246,7 +330,7 @@
 				font-size: 0.75rem;
 				font-family: "JetBrains Mono", monospace;
 				margin-top: 0.5rem;
-				color: rgba(0, 0, 0, 0.4);
+				color: var(--accent-muted);
 				width: 100%;
 			}
 
@@ -256,15 +340,15 @@
 
 			.bars-footer hr {
 				flex-grow: 1;
-				border-color: rgba(0, 0, 0, 0.1);
+				border-color: var(--border-subtle);
 			}
 
 			.uptime-percentage {
 				position: absolute;
 				left: 50%;
 				transform: translateX(-50%);
-				background-color: white;
-				color: rgba(0, 0, 0, 0.5);
+				background-color: var(--bg-main);
+				color: var(--accent-tertiary);
 			}
 
 			footer {
@@ -275,13 +359,13 @@
 			}
 
 			footer a {
-				color: rgba(0, 0, 0, 0.3);
+				color: var(--accent-muted);
 				font-size: 0.875rem;
 				text-decoration: none;
 			}
 
 			footer a:hover {
-				color: black;
+				color: var(--accent-primary);
 			}
 
 			.combobox {
@@ -299,8 +383,8 @@
 				font-family: "Inter", sans-serif;
 				font-size: 0.825rem;
 
-				background-color: white;
-				border: 1px solid rgba(0, 0, 0, 0.5);
+				background-color: var(--bg-main);
+				border: 1px solid var(--border-secondary);
 				border-radius: 4px;
 				outline: none;
 				padding: 0;
@@ -308,17 +392,22 @@
 
 				cursor: pointer;
 				transition: background-color 100ms ease;
+				color: var(--text-primary);
+			}
+
+			.combobox-trigger.open {
+				border-color: var(--border-primary);
 			}
 
 			.combobox-trigger:hover {
-				background-color: rgba(0, 0, 0, 0.03);
+				background-color: var(--hover-bg);
 			}
 
 			.combobox-trigger div {
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				border-left: 1px solid rgba(0, 0, 0, 0.5);
+				border-left: 1px solid var(--border-secondary);
 			}
 
 			.combobox-trigger.open div svg {
@@ -328,13 +417,13 @@
 			.combobox-dropdown {
 				position: absolute;
 				width: 100%;
-				background-color: white;
-				border: 1px solid black;
+				background-color: var(--bg-main);
+				border: 1px solid var(--border-primary);
 				display: none;
 				flex-direction: column;
 				z-index: 100;
 				border-radius: 4px;
-				box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+				box-shadow: 0 10px 25px var(--shadow-color);
 			}
 
 			.combobox-dropdown.open {
@@ -344,103 +433,77 @@
 			.combobox-option {
 				padding: 0.35rem 0.5rem;
 				cursor: pointer;
-				color: black;
+				color: var(--text-primary);
 				font-size: 0.825rem;
 				text-decoration: none;
 			}
 
 			.combobox-option.selected {
-				background-color: rgba(0, 0, 0, 0.08);
+				background-color: var(--selected-bg);
 			}
 
 			.combobox-option:hover {
-				background-color: black;
-				color: white;
+				background-color: var(--accent-primary);
+				color: var(--accent-secondary);
 			}
 
-			@media (max-width: 640px) {
+			@media (min-width: 39.625rem) {
+				body::before {
+					content: "";
+					position: fixed;
+					inset: 0;
+					background-image: linear-gradient(90deg, var(--border-outline) 1px, transparent 1px),
+						linear-gradient(var(--border-outline) 1px, transparent 1px);
+					background-size: 48px 48px;
+					background-position: center;
+					pointer-events: none;
+				}
+			}
+
+			@media (max-width: 39.625rem) {
+				body {
+					background-color: var(--bg-main);
+				}
+
 				main {
-					padding: 3rem 1rem 2rem;
+					width: 100%;
 				}
 
-				#emoticon {
-					font-size: 2.5rem;
+				.bars-container {
+					overflow-x: hidden;
+					padding-top: 3rem;
+					margin-top: -3rem;
 				}
 
-				h1 {
-					font-size: 1.25rem;
+				.bars-gradient {
+					display: block !important;
+				}
+			}
+
+			@media (max-width: 30rem) {
+				main {
+					padding: 4rem 1rem 1.5rem;
 				}
 
-				h2 {
-					font-size: 1.125rem;
-				}
-
-				#overall-status {
-					font-size: 0.8125rem;
-				}
-
-				.status {
-					font-size: 0.6875rem;
-				}
-
-				.bars {
-					gap: 0.15rem;
-				}
-
-				.status-bar {
-					height: 2rem;
-				}
-
-				.legend-item {
-					font-size: 0.6875rem;
-				}
-
-				.legend-item .status-bar {
-					width: 0.875rem;
-					height: 0.875rem;
-				}
-
-				.bars-footer {
-					font-size: 0.6875rem;
+				#caption {
+					align-items: start;
 				}
 
 				#legend {
-					gap: 0.75rem;
-				}
-			}
-
-			@media (max-width: 480px) {
-				main {
-					padding: 2rem 0.875rem 1.5rem;
+					gap: 0.5rem;
+					flex-direction: column;
+					margin-top: 0.25rem;
 				}
 
-				#emoticon {
-					font-size: 2rem;
+				.bars > div:hover .status-bar::after {
+					position: fixed;
+					left: 50vw;
+					transform: translateX(-50%);
+					bottom: 4rem;
 				}
 
-				h1 {
-					font-size: 1.125rem;
-				}
-
-				h2 {
-					font-size: 1rem;
-				}
-
-				.bars {
-					gap: 0.125rem;
-				}
-
-				.status-bar {
-					height: 1.75rem;
-				}
-
-				.status-bar:hover::after {
-					font-size: 0.6rem;
-					padding: 0.35rem 0.4rem;
-				}
-
-				#services {
-					gap: 2rem;
+				.uptime-percentage {
+					transform: translateX(0%);
 				}
 			}
 		</style>
@@ -535,6 +598,8 @@
 					<div class="bars-container">
 						{{ if eq $.View "minutes" }}
 						<div class="bars">
+							<div class="bars-gradient"></div>
+
 							{{ range $timelineIndex, $timelineStatus := $serviceStatus.MinuteTimeline }}
 							<div>
 								<div
@@ -546,13 +611,15 @@
 						</div>
 
 						<div class="bars-footer">
-							<span>30 minutes ago</span>
+							<span class="timeline-length">30 minutes ago</span>
 							<hr />
 							<span class="uptime-percentage">{{ $serviceStatus.MinuteUptime }}% uptime</span>
 							<span>now</span>
 						</div>
 						{{ else if eq $.View "hours" }}
 						<div class="bars">
+							<div class="bars-gradient"></div>
+
 							{{ range $timelineIndex, $timelineStatus := $serviceStatus.HourTimeline }}
 							<div>
 								<div
@@ -564,7 +631,7 @@
 						</div>
 
 						<div class="bars-footer">
-							<span>24 hours ago</span>
+							<span class="timeline-length">24 hours ago</span>
 							<hr />
 							<span class="uptime-percentage">{{ $serviceStatus.HourUptime }}% uptime</span>
 							<span>now</span>
@@ -572,6 +639,8 @@
 
 						{{ else }}
 						<div class="bars">
+							<div class="bars-gradient"></div>
+
 							{{ range $timelineIndex, $timelineStatus := $serviceStatus.DayTimeline }}
 							<div>
 								<div
@@ -583,7 +652,7 @@
 						</div>
 
 						<div class="bars-footer">
-							<span>30 days ago</span>
+							<span class="timeline-length">30 days ago</span>
 							<hr />
 							<span class="uptime-percentage">{{ $serviceStatus.DayUptime }}% uptime</span>
 							<span>today</span>
@@ -620,6 +689,20 @@
 		</main>
 
 		<script>
+			// responsiveness
+			const timelineLengthTexts = document.querySelectorAll(".timeline-length");
+
+			function resizeUpdate() {
+				timelineLengthTexts.forEach((t) => {
+					const amountOfBars = Math.ceil(t.parentElement.clientWidth / 19); // each bar is 19px
+					t.textContent = `${amountOfBars} {{ .View }} ago`;
+				});
+			}
+
+			resizeUpdate();
+			window.addEventListener("resize", resizeUpdate);
+
+			// last updated text
 			const lastUpdatedText = document.querySelector("#last-updated");
 
 			function update() {

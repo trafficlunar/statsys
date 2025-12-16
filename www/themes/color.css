@@ -1,142 +1,40 @@
 /* Colored Theme */
+:root {
+	--bg-body: rgba(37, 99, 235, 0.04);
+	--bg-main: #f8fafc;
 
-body {
-	background-color: rgba(37, 99, 235, 0.04);
-}
+	--text-primary: #0f172a;
+	--text-secondary: rgba(15, 23, 42, 0.6);
 
-body::before {
-	background-image: linear-gradient(90deg, rgba(37, 99, 235, 0.1) 1px, transparent 1px), linear-gradient(rgba(37, 99, 235, 0.1) 1px, transparent 1px);
-}
+	--border-primary: rgba(15, 23, 42, 0.4);
+	--border-secondary: rgba(15, 23, 42, 0.4);
+	--border-subtle: rgba(15, 23, 42, 0.15);
+	--border-dotted: rgba(15, 23, 42, 0.15);
+	--border-outline: rgba(37, 99, 235, 0.1);
 
-main {
-	background-color: #f8fafc;
-	outline: 1px solid rgba(37, 99, 235, 0.1);
-}
+	--accent-primary: #2563eb;
+	--accent-secondary: white;
+	--accent-tertiary: rgba(37, 99, 235, 0.75);
+	--accent-muted: rgba(37, 99, 235, 0.5);
+	--accent-faded: rgba(37, 99, 235, 0.4);
 
-hr {
-	border-bottom: 2px dotted rgba(15, 23, 42, 0.15);
-}
+	--status-online: #22c55e;
+	--status-online-border: #16a34a;
+	--status-degraded: #facc15;
+	--status-degraded-pattern: rgba(255, 255, 255, 0.4);
+	--status-degraded-border: #eab308;
+	--status-offline: #ef4444;
+	--status-offline-x: white;
+	--status-offline-border: #dc2626;
+	--status-unknown: rgba(0, 0, 0, 0.1);
 
-#emoticon {
-	color: #2563eb;
-}
+	--hover-bg: rgba(37, 99, 235, 0.05);
+	--hover-text: white;
+	--selected-bg: rgba(37, 99, 235, 0.12);
 
-#overall-status {
-	background-color: #2563eb;
-	color: white;
-}
+	--tooltip-bg: #0f172a;
+	--tooltip-text: white;
+	--tooltip-border: transparent;
 
-#pattern {
-	background-image: repeating-linear-gradient(-45deg, #2563eb, #2563eb 10px, transparent 0px, transparent 20px);
-}
-
-#last-updated {
-	color: rgba(15, 23, 42, 0.6);
-}
-
-.service-name {
-	color: #0f172a;
-}
-
-.service-name svg {
-	color: rgba(37, 99, 235, 0.4);
-}
-
-.service-name:hover svg {
-	color: rgba(37, 99, 235, 0.9);
-}
-
-.bars > div:hover .status-bar::after {
-	background-color: #0f172a;
-	color: white;
-}
-
-.status-bar.Online {
-	background-color: #22c55e;
-	border-color: #16a34a;
-}
-
-.bars > div:hover .status-bar.Online {
-	background-color: #16a34a;
-}
-
-.status-bar.Degraded {
-	background-color: #facc15;
-	border-color: #eab308;
-	background-image: linear-gradient(
-		45deg,
-		rgba(255, 255, 255, 0.4) 25%,
-		transparent 25%,
-		transparent 50%,
-		rgba(255, 255, 255, 0.4) 50%,
-		rgba(255, 255, 255, 0.4) 75%,
-		transparent 75%,
-		transparent
-	);
-	background-size: 8px 8px;
-}
-
-.status-bar.Offline {
-	background-color: #ef4444;
-	border-color: #dc2626;
-}
-
-.status-bar.Offline::before {
-	color: white;
-}
-
-.status-bar.Unknown::before {
-	background-color: rgba(0, 0, 0, 0.1);
-}
-
-.bars-footer {
-	color: rgba(15, 23, 42, 0.45);
-}
-
-.bars-footer hr {
-	border-color: rgba(15, 23, 42, 0.15);
-}
-
-.uptime-percentage {
-	background-color: #f8fafc;
-	color: rgba(37, 99, 235, 0.75);
-}
-
-footer a {
-	color: #2563eb;
-}
-
-footer a:hover {
-	color: #1e40af;
-}
-
-.combobox-trigger {
-	background-color: #f8fafc;
-	border: 1px solid rgba(15, 23, 42, 0.4);
-}
-
-.combobox-trigger:hover {
-	background-color: rgba(37, 99, 235, 0.05);
-}
-
-.combobox-trigger div {
-	border-left: 1px solid rgba(15, 23, 42, 0.4);
-}
-
-.combobox-dropdown {
-	background-color: #f8fafc;
-	border: 1px solid rgba(15, 23, 42, 0.4);
-}
-
-.combobox-option {
-	color: #0f172a;
-}
-
-.combobox-option.selected {
-	background-color: rgba(37, 99, 235, 0.12);
-}
-
-.combobox-option:hover {
-	background-color: #2563eb;
-	color: white;
+	--shadow-color: rgba(0, 0, 0, 0.1);
 }
