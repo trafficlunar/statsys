@@ -15,9 +15,9 @@ var db *sql.DB
 func InitDatabase() {
 	// open/create database
 	var err error
-	db, err = sql.Open("sqlite", "status.db")
+	db, err = sql.Open("sqlite", *DatabasePath)
 	if err != nil {
-		log.Fatalf("failed to initalise database: %v", err)
+		log.Fatalf("failed to initalize database: %v", err)
 	}
 
 	db.SetMaxOpenConns(1)
@@ -97,7 +97,7 @@ func InitDatabase() {
 		templateData.Services[index] = service
 	}
 
-	log.Println("database initalised")
+	log.Printf("database initalized at '%s'", *DatabasePath)
 }
 
 func CloseDatabase() {

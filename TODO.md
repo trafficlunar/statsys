@@ -1,5 +1,4 @@
 - [ ] Accessibility
-- [ ] Better mobile support
 - [ ] View incidents
 - [ ] Latency graphs?
 - [ ] README

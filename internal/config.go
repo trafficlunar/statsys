@@ -26,7 +26,7 @@ type Config struct {
 var config Config
 
 func LoadConfig() {
-	configFile, err := os.ReadFile("config.toml")
+	configFile, err := os.ReadFile(*ConfigPath)
 	if err != nil {
 		log.Fatalf("failed to load config: %v", err)
 	}
@@ -60,5 +60,5 @@ func LoadConfig() {
 		templateData.Services[index] = service
 	}
 
-	log.Println("config loaded")
+	log.Printf("config loaded from '%s'", *ConfigPath)
 }
