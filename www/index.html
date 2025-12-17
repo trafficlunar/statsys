@@ -211,6 +211,7 @@
 				width: 1.188rem;
 				height: 2.5rem;
 				flex-shrink: 0;
+				position: relative;
 			}
 
 			.status-bar {
@@ -222,7 +223,7 @@
 				z-index: 0;
 				border-radius: 3px;
 
-				/* this weird hack fixes some inconsistencies  */
+				/* this weird hack fixes a lot of CSS glitches */
 				transform: translateX(0px);
 			}
 
@@ -231,14 +232,16 @@
 				filter: brightness(0.9);
 			}
 
-			.bars > div:hover .status-bar::after {
+			/* tooltip */
+			.bars > div:hover::after {
 				content: attr(data-tooltip);
 
 				position: absolute;
 				bottom: 100%;
-				left: var(--tooltip-left, 50%);
-
+				left: 50%;
 				margin-bottom: 0.5rem;
+
+				font-size: 0.75rem;
 				font-family: "JetBrains Mono", monospace;
 				font-weight: 600;
 
@@ -247,11 +250,11 @@
 				border: 1px solid var(--tooltip-border);
 				padding: 0.45rem 0.5rem;
 				border-radius: 0.25rem;
-				font-size: 0.75rem;
 
 				transform: translateX(-50%);
 				white-space: nowrap;
 				z-index: 10;
+				pointer-events: none;
 			}
 
 			.status-bar.Online {
@@ -314,11 +317,11 @@
 			.bars-gradient {
 				display: none !important;
 				position: absolute !important;
-				left: 0;
+				left: -2.5rem;
 				bottom: 0;
-				width: 2.5rem !important;
+				width: 5rem !important;
 				height: 3rem !important;
-				background: linear-gradient(to left, transparent, var(--bg-main));
+				background: linear-gradient(to left, transparent, var(--bg-main) 50%);
 				pointer-events: none;
 				z-index: 10;
 			}
@@ -469,12 +472,6 @@
 					width: 100%;
 				}
 
-				.bars-container {
-					overflow-x: hidden;
-					padding-top: 3rem;
-					margin-top: -3rem;
-				}
-
 				.bars-gradient {
 					display: block !important;
 				}
@@ -495,11 +492,9 @@
 					margin-top: 0.25rem;
 				}
 
-				.bars > div:hover .status-bar::after {
-					position: fixed;
-					left: 50vw;
-					transform: translateX(-50%);
-					bottom: 4rem;
+				/* places tooltip in middle of screen, allows small screens to see tooltip without getting cut off */
+				.bars > div {
+					position: static;
 				}
 
 				.uptime-percentage {
@@ -601,11 +596,8 @@
 							<div class="bars-gradient"></div>
 
 							{{ range $timelineIndex, $timelineStatus := $serviceStatus.MinuteTimeline }}
-							<div>
-								<div
-									class="status-bar {{ $timelineStatus.Status }}"
-									data-tooltip="{{ $timelineStatus.FormattedTime }} • {{ $timelineStatus.Status }}"
-								></div>
+							<div tabindex="0" data-tooltip="{{ $timelineStatus.FormattedTime }} • {{ $timelineStatus.Status }}">
+								<div class="status-bar {{ $timelineStatus.Status }}"></div>
 							</div>
 							{{ end }}
 						</div>
@@ -621,11 +613,8 @@
 							<div class="bars-gradient"></div>
 
 							{{ range $timelineIndex, $timelineStatus := $serviceStatus.HourTimeline }}
-							<div>
-								<div
-									class="status-bar {{ $timelineStatus.Status }}"
-									data-tooltip="{{ $timelineStatus.FormattedTime }} • {{ $timelineStatus.Status }}"
-								></div>
+							<div tabindex="0" data-tooltip="{{ $timelineStatus.FormattedTime }} • {{ $timelineStatus.Status }}">
+								<div class="status-bar {{ $timelineStatus.Status }}"></div>
 							</div>
 							{{ end }}
 						</div>
@@ -642,11 +631,8 @@
 							<div class="bars-gradient"></div>
 
 							{{ range $timelineIndex, $timelineStatus := $serviceStatus.DayTimeline }}
-							<div>
-								<div
-									class="status-bar {{ $timelineStatus.Status }}"
-									data-tooltip="{{ $timelineStatus.FormattedTime }} • {{ $timelineStatus.Status }}"
-								></div>
+							<div tabindex="0" data-tooltip="{{ $timelineStatus.FormattedTime }} • {{ $timelineStatus.Status }}">
+								<div class="status-bar {{ $timelineStatus.Status }}"></div>
 							</div>
 							{{ end }}
 						</div>
@@ -694,7 +680,7 @@
 
 			function resizeUpdate() {
 				timelineLengthTexts.forEach((t) => {
-					const amountOfBars = Math.ceil(t.parentElement.clientWidth / 19); // each bar is 19px
+					const amountOfBars = Math.min(Math.floor(t.parentElement.clientWidth / 19), "{{ .View }}" === "hours" ? 24 : 30); // each bar is 19px
 					t.textContent = `${amountOfBars} {{ .View }} ago`;
 				});
 			}

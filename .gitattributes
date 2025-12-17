@@ -1,1 +1,3 @@
+# Only for decorational purposes to show Go as the main language
 www/themes/*.css linguist-detectable=false
+www/index.html linguist-detectable=false
