@@ -45,6 +45,8 @@ func InitDatabase() {
 		log.Fatalf("failed to create table: %v", err)
 	}
 
+	templateDataMu.Lock()
+
 	// load template data from database
 	for index, service := range templateData.Services {
 		// timelines
@@ -97,6 +99,7 @@ func InitDatabase() {
 		templateData.Services[index] = service
 	}
 
+	templateDataMu.Unlock()
 	log.Printf("database initalized at '%s'", *DatabasePath)
 }
 
@@ -332,8 +335,10 @@ func AddToTimeline(serviceIndex int, status string) {
 		}
 	}
 
+	templateDataMu.Lock()
 	templateData.Services[serviceIndex] = service
 	calculateUptimePercentages(serviceIndex)
+	templateDataMu.Unlock()
 }
 
 func AddIncident(serviceIndex int, status string, startTime time.Time) {
@@ -348,7 +353,9 @@ func AddIncident(serviceIndex int, status string, startTime time.Time) {
 		Status:    status,
 		StartTime: startTime,
 	})
+	templateDataMu.Lock()
 	templateData.Services[serviceIndex] = service
+	templateDataMu.Unlock()
 	log.Println("(" + service.Name + ") incident started")
 }
 
@@ -364,6 +371,8 @@ func ResolveIncident(serviceIndex int, serviceName string, endTime time.Time) {
 	}
 
 	service.Incidents[len(service.Incidents)-1].EndTime = &endTime
+	templateDataMu.Lock()
 	templateData.Services[serviceIndex] = service
+	templateDataMu.Unlock()
 	log.Println("(" + service.Name + ") incident resolved")
 }

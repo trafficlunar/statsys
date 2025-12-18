@@ -25,10 +25,15 @@ func checkStatuses() {
 			startTime := time.Now().UTC()
 			res, err := client.Get(service.Url)
 			latency := time.Since(startTime).Milliseconds()
+			if res != nil {
+				defer res.Body.Close()
+			}
 
 			status := "Online"
 
-			if err != nil || res.StatusCode != 200 {
+			if err != nil {
+				status = "Offline"
+			} else if res.StatusCode != 200 {
 				status = "Offline"
 			} else if latency >= service.LatencyThreshold {
 				status = "Degraded"
@@ -49,7 +54,9 @@ func checkStatuses() {
 				}
 			}
 
+			templateDataMu.Lock()
 			templateData.Services[index].Status = status
+			templateDataMu.Unlock()
 		}(index, service)
 	}
 
@@ -65,17 +72,22 @@ func checkStatuses() {
 		}
 	}
 
+	templateDataMu.Lock()
 	templateData.IsOperational = isOperational
 	templateData.LastUpdated = time.Now().UTC().UnixMilli()
+	templateDataMu.Unlock()
 }
 
 func StartCheckingStatuses() {
 	log.Println("started checking statuses...")
 
-	go func() {
-		checkStatuses()
+	checkStatuses()
 
-		for range time.Tick(1 * time.Minute) {
+	go func() {
+		ticker := time.NewTicker(1 * time.Minute)
+		defer ticker.Stop()
+
+		for range ticker.C {
 			checkStatuses()
 		}
 	}()

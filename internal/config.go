@@ -20,6 +20,7 @@ type Config struct {
 	DefaultView         string          `toml:"default_view"`
 	DefaultTheme        string          `toml:"default_theme"`
 	EnableThemeSwitcher bool            `toml:"enable_theme_switcher"`
+	EnableWatermark     bool            `toml:"enable_watermark"`
 	Services            []ServiceConfig `toml:"services"`
 }
 
@@ -39,6 +40,7 @@ func LoadConfig() {
 	templateData.LinkText = config.LinkText
 	templateData.LinkUrl = config.LinkUrl
 	templateData.EnableThemeSwitcher = config.EnableThemeSwitcher
+	templateData.EnableWatermark = config.EnableWatermark
 	templateData.Services = make([]Service, len(config.Services))
 	for index, ser := range config.Services {
 		// default to 1000ms

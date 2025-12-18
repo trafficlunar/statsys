@@ -5,7 +5,7 @@ title = "trafficlunar"
 link_text = "go back"
 link_url = "https://trafficlunar.net"
 
-# Default timeline shown on the index page
+# Default timeline shown
 # Users can still switch views manually
 #
 # Available options:
@@ -14,13 +14,17 @@ link_url = "https://trafficlunar.net"
 # "days"    - past 30 days
 default_view = "hours"
 
-# Default theme for the status page
+# Default theme
 # Available themes: https://github.com/trafficlunar/statsys/tree/main/www/themes
 # Defaults to "monochrome"
 default_theme = "color"
 # Set to true to allow users to switch the theme
 # Defaults to true
 enable_theme_switcher = true
+
+# Set to true to show a small statsys watermark
+# Defaults to true
+enable_watermark = true
 
 # List of services to monitor
 [[services]]

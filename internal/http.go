@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/klauspost/compress/gzhttp"
@@ -45,6 +46,7 @@ type TemplateData struct {
 	LinkText            string
 	LinkUrl             string
 	EnableThemeSwitcher bool
+	EnableWatermark     bool
 	LastUpdated         int64
 	IsOperational       bool
 	Services            []Service
@@ -61,8 +63,10 @@ func ToUpper(s string) string {
 
 var templateData = TemplateData{
 	EnableThemeSwitcher: true,
+	EnableWatermark:     true,
 	LastUpdated:         time.Now().UTC().UnixMilli(),
 }
+var templateDataMu sync.Mutex
 var tmpl *template.Template
 var errorTmpl *template.Template
 
@@ -79,16 +83,16 @@ func renderError(w http.ResponseWriter, statusCode int, message string) {
 	}
 }
 
-func index(w http.ResponseWriter, req *http.Request) {
+func index(w http.ResponseWriter, r *http.Request) {
 	// handle 404
-	if req.URL.Path != "/" {
+	if r.URL.Path != "/" {
 		renderError(w, http.StatusNotFound, "Page not found")
 		return
 	}
 
 	data := templateData
-	data.View = req.URL.Query().Get("view")
-	data.Theme = req.URL.Query().Get("theme")
+	data.View = r.URL.Query().Get("view")
+	data.Theme = r.URL.Query().Get("theme")
 
 	switch data.View {
 	case "hours", "minutes", "days":
@@ -111,16 +115,19 @@ func index(w http.ResponseWriter, req *http.Request) {
 	}
 }
 
-func styles(w http.ResponseWriter, req *http.Request) {
-	http.ServeFile(w, req, "www/styles.css")
+func styles(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Cache-Control", "public, max-age=31536000")
+	http.ServeFile(w, r, "www/styles.css")
 }
 
-func favicon(w http.ResponseWriter, req *http.Request) {
-	http.ServeFile(w, req, "www/favicon.ico")
+func favicon(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Cache-Control", "public, max-age=31536000")
+	http.ServeFile(w, r, "www/favicon.ico")
 }
 
-func robots(w http.ResponseWriter, req *http.Request) {
-	http.ServeFile(w, req, "www/robots.txt")
+func robots(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Cache-Control", "public, max-age=31536000")
+	http.ServeFile(w, r, "www/robots.txt")
 }
 
 func StartHttpServer() {
@@ -147,8 +154,14 @@ func StartHttpServer() {
 	mux.HandleFunc("/styles.css", styles)
 	mux.HandleFunc("/favicon.ico", favicon)
 	mux.HandleFunc("/robots.txt", robots)
-	mux.Handle("/themes/", gzhttp.GzipHandler(http.StripPrefix("/themes/", http.FileServer(http.Dir("www/themes/")))))
-	mux.Handle("/fonts/", http.StripPrefix("/fonts/", http.FileServer(http.Dir("www/fonts/"))))
+	mux.Handle("/themes/", gzhttp.GzipHandler(http.StripPrefix("/themes/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Cache-Control", "public, max-age=31536000")
+		http.FileServer(http.Dir("www/themes/")).ServeHTTP(w, r)
+	}))))
+	mux.Handle("/fonts/", http.StripPrefix("/fonts/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Cache-Control", "public, max-age=31536000")
+		http.FileServer(http.Dir("www/fonts/")).ServeHTTP(w, r)
+	})))
 
 	// wrap with gzip middleware
 	handler := gzhttp.GzipHandler(mux)

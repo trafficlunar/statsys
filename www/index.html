@@ -3,7 +3,27 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>status - {{ .Title }}</title>
+		<meta
+			http-equiv="Content-Security-Policy"
+			content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self';"
+		/>
+		<title>status — {{ .Title }}</title>
+		<meta name="title" content="{{ .Title }} Status" />
+		<meta name="description" content="Real-time status monitoring for {{ .Title }}" />
+		<meta name="keywords" content="status page, uptime, system status, service status, {{ .Title }}, monitoring, statsys" />
+		<meta name="author" content="{{ .Title }}" />
+		<meta name="robots" content="index, follow" />
+
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="{{ .Title }} Status" />
+		<meta property="og:description" content="Real-time status monitoring for {{ .Title }}" />
+		<meta property="og:site_name" content="{{ .Title }} Status" />
+
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="{{ .Title }} Status" />
+		<meta name="twitter:description" content="Real-time status monitoring for {{ .Title }}" />
+
+		<meta name="theme-color" content="#000000" />
 
 		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 		<link rel="stylesheet" href="/styles.css" />
@@ -450,6 +470,23 @@
 				color: var(--accent-secondary);
 			}
 
+			#watermark {
+				position: absolute;
+				bottom: 1rem;
+				right: 1rem;
+				font-size: 0.875rem;
+				text-decoration: none;
+				color: var(--accent-faded);
+				word-break: break-word;
+				width: 15%;
+				text-align: right;
+			}
+
+			#watermark:hover {
+				color: var(--accent-primary);
+				opacity: 1;
+			}
+
 			@media (min-width: 39.625rem) {
 				body::before {
 					content: "";
@@ -474,6 +511,20 @@
 
 				.bars-gradient {
 					display: block !important;
+				}
+
+				#watermark {
+					top: 2rem;
+					left: 2rem;
+					right: unset;
+					width: 20%;
+					text-align: left;
+					font-size: 0.75rem;
+					z-index: 10;
+				}
+
+				#watermark span:nth-child(2) {
+					opacity: 0.5;
 				}
 			}
 
@@ -500,9 +551,14 @@
 				.uptime-percentage {
 					transform: translateX(0%);
 				}
+
+				#watermark {
+					left: 1.5rem;
+				}
 			}
 		</style>
 
+		<link rel="preload" as="style" href="/themes/{{ .Theme }}.css" />
 		<link rel="stylesheet" href="/themes/{{ .Theme }}.css" />
 	</head>
 	<body>
@@ -673,6 +729,13 @@
 				<a href="{{ .LinkUrl }}">{{ .LinkText }}</a>
 			</footer>
 		</main>
+
+		{{ if .EnableWatermark }}
+		<a id="watermark" href="https://github.com/trafficlunar/statsys">
+			<span>powered by</span>
+			<span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--accent-primary)">statsys</span>
+		</a>
+		{{ end }}
 
 		<script>
 			// responsiveness
